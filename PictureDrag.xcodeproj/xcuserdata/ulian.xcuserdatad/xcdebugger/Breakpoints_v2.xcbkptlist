@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "2728B243-971B-4560-85AB-BC60D8CC06F8"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C9A810A7-33F3-41AD-9395-10827ED36B0C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/YNExtensions/YNExtensions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "inactivateLayoutMarginConstraints()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C9A810A7-33F3-41AD-9395-10827ED36B0C - 24120381729be75c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIView.inactivateLayoutMarginConstraints() -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/YNExtensions/YNExtensions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "118"
+                  endingLineNumber = "118"
+                  offsetFromSymbolStart = "968">
+               </Location>
+               <Location
+                  uuid = "C9A810A7-33F3-41AD-9395-10827ED36B0C - 24120381729be75c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIView.inactivateLayoutMarginConstraints() -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/YNExtensions/YNExtensions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "118"
+                  endingLineNumber = "118"
+                  offsetFromSymbolStart = "948">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "049133AA-699C-4666-893F-D14CC3C641C4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/YNExtensions/YNExtensions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "inactivateLayoutMarginConstraints()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "049133AA-699C-4666-893F-D14CC3C641C4 - 24120381729be7d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIView.inactivateLayoutMarginConstraints() -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/YNExtensions/YNExtensions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114"
+                  offsetFromSymbolStart = "616">
+               </Location>
+               <Location
+                  uuid = "049133AA-699C-4666-893F-D14CC3C641C4 - 24120381729be7d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIView.inactivateLayoutMarginConstraints() -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/YNExtensions/YNExtensions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114"
+                  offsetFromSymbolStart = "596">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
