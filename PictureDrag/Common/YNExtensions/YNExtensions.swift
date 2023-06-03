@@ -26,15 +26,7 @@ extension UIView {
         //            view.addConstraints(heightConstraints)
 //    }
     
-    func centralizeInView(_ view : UIView) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        let horizontalConstraint = NSLayoutConstraint(item: self,
-                                                 attribute: .centerX, //NSLayoutConstraint.Attribute.centerX,
-                                                 relatedBy: .equal, // NSLayoutConstraint.Relation.equal
-                                                    toItem: view,
-                                                 attribute: .centerX,
-                                                multiplier: 1,
-                                                  constant: 0)
+    func centerYInView(_ view : UIView) {
         let verticalConstraint = NSLayoutConstraint(item: self,
                                                attribute: .centerY,
                                                relatedBy: .equal,
@@ -42,7 +34,7 @@ extension UIView {
                                                attribute: .centerY,
                                               multiplier: 1,
                                                 constant: 0)
-        view.addConstraints([horizontalConstraint, verticalConstraint])
+        view.addConstraint(verticalConstraint)
     }
     
     func addLeadConstraint(constant : CGFloat,
@@ -120,4 +112,10 @@ extension UIView {
             }
         }
     }
+}
+
+extension UIButton {
+    // override setSelected && setHighlighted to change color on touch
+    
+    
 }

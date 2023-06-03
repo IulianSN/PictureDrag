@@ -21,12 +21,15 @@ class YNImageModifier {
     // MARK: -
     // MARK: Public functions
     
-    func makeSmallImage(_ image : UIImage) -> UIImage {
+    func makeSmallImage(_ image : UIImage?) -> UIImage? {
+        if image == nil {
+            return nil
+        }
         let format = UIGraphicsImageRendererFormat.default()
         format.scale = 1
         let renderer = UIGraphicsImageRenderer(size: self.imageBigSize, format: format)
         let resized = renderer.image { (context) in
-            image.draw(in: CGRect(origin: .zero, size: self.imageBigSize))
+            image!.draw(in: CGRect(origin: .zero, size: self.imageBigSize))
         }
         return resized
     }

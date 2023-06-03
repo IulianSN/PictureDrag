@@ -38,15 +38,29 @@ struct YNBigImageModel {
     var imageIdentifier : String
     var bigImage : UIImage? {
         get {
-            guard let image = UserDefaults.standard.object(forKey: imageIdentifier) as? UIImage else {
-                assertionFailure("\(Self.self): wrong type of object")
-                return nil
+            if let image = UserDefaults.standard.object(forKey: imageIdentifier) as? UIImage {
+                return image
             }
-            return image
+            return nil
         }
     }
     
     init(imageIdentifier: String) {
         self.imageIdentifier = imageIdentifier
     }
+}
+
+struct YNMainControllerSettingsModel {
+    let newImageButtonTitle = "Select new image"
+    let existingImageButtonTitle = "Select existing image"
+    let seeResultsButtonTitle = "Best results"
+    
+    let colorOnTouch = appDesign.colorBackgroundHighlighted
+}
+
+struct YNResultsScreenModel {
+    let screenTitle = "Best results"
+    let noResultsText = "There is no results yet. Please play the game at least once!"
+    
+    var gameResultsModels : Array<YNResultsModel>?
 }

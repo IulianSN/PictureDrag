@@ -15,7 +15,8 @@ class YNNoImageButton : UIView {
     private var nameLabel : UILabel?
     private var touchEndedCompletion : YNButtonTapCompletion?
     private var isTouchInSelf = false
-    private var tapTimestamp : TimeInterval = 0
+    private var tapTimestamp : TimeInterval = 0 
+    private var touchView : YNTouchView?
     
     // MARK: -
     // MARK: Public properties
@@ -23,6 +24,14 @@ class YNNoImageButton : UIView {
     var title = "" {
         didSet {
             nameLabel?.text = title
+        }
+    }
+    
+    var colorOnTouch : UIColor? {
+        didSet {
+            if let color = colorOnTouch {
+                self.touchView?.colorOnTouch = color
+            }
         }
     }
     
@@ -49,8 +58,7 @@ class YNNoImageButton : UIView {
     // MARK: Private functions
     
     private func setupView() {
-        self.translatesAutoresizingMaskIntoConstraints = false // is it works ??
-        
+        self.isUserInteractionEnabled = true
         layer.borderWidth = 2.0
         layer.borderColor = appDesign.borderColor.cgColor
         
@@ -76,24 +84,17 @@ class YNNoImageButton : UIView {
         touchView.addTrailConstraint(constant: 0, relation: .equal, inView: self)
         touchView.addTopConstraint(constant: 0, relation: .equal, inView: self)
         touchView.addBottomConstraint(constant: 0, relation: .equal, inView: self)
-        
-        self.isUserInteractionEnabled = true
+        self.touchView = touchView
 
-// in 'debug view hierarchy' UILayoutGuide are absent, but in console there is an error with UILayoutGuide constraints
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        label.textAlignment = .center
         touchView.addSubview(label)
-//        label.layoutMargins = .zero
-//        label.inactivateLayoutMarginConstraints() // helps ??
-//        self.updateConstraintsIfNeeded()
         
+#warning("Use custom font for label !!! OR better custom label")
 
-
-#warning("Use custom font for label !!!")
-
-        label.centralizeInView(touchView)
-        label.addLeadConstraint(constant: 4, relation: .greaterThanOrEqual, inView: touchView)
-        label.addTrailConstraint(constant: 4, relation: .greaterThanOrEqual, inView: touchView)
-        label.text = "Test text asdgf asdf asgf asdfg sdfgsd sdgs dg d" // TMP, remove !!!
+        label.addLeadConstraint(constant: 4, relation: .equal, inView: touchView)
+        label.addTrailConstraint(constant: 4, relation: .equal, inView: touchView)
+        label.centerYInView(touchView)
         nameLabel = label
     }
 }

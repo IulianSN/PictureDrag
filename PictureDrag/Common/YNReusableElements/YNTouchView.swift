@@ -17,8 +17,8 @@ class YNTouchView : UIView {
     // MARK: -
     // MARK: Public properties
     
-    var colorOnTouch = appDesign.colorBackgroundHighlighted
-    var colorNormal = appDesign.colorBackgroundNormal {
+    var colorOnTouch = UIColor.systemGray6
+    var colorNormal = UIColor.systemBackground {
         didSet {
             self.backgroundColor = colorNormal
         }
@@ -58,7 +58,7 @@ class YNTouchView : UIView {
     }
     
     private func touchEnded() {
-        self.backgroundColor = UIColor.systemBackground
+        self.backgroundColor = self.colorNormal
         if isTouchInSelf {
             touchEndedSuccessfully()
         }
@@ -69,7 +69,7 @@ class YNTouchView : UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         isTouchInSelf = true
-        self.backgroundColor = UIColor.systemGray6
+        self.backgroundColor = self.colorOnTouch
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

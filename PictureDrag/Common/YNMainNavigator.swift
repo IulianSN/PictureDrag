@@ -11,6 +11,7 @@ class YNMainNavigator : YNMainPresenterDelegate {
     var mainPresenter : YNMainPresenter?
     var mainViewController : YNMainViewController?
     let mainInteractor = YNInteractor()
+    var navigationController : UINavigationController?
     
     // MARK: -
     // MARK: Public functions
@@ -27,10 +28,10 @@ class YNMainNavigator : YNMainPresenterDelegate {
             return
         }
         self.mainPresenter = YNMainPresenter(navDelegate: self, interactor: self.mainInteractor)
-        
-        self.mainPresenter?.setupMainController(&controller) // names for buttons !!!
+        self.mainPresenter?.setupMainController(&controller)
         self.mainViewController = controller
-        self.showRootViewController(viewController: controller, inWindow: windowUnwrapped)
+        self.navigationController = windowUnwrapped.rootViewController as? UINavigationController
+        self.showRootViewController(viewController: controller)
     }
     
     // MARK: -
@@ -39,15 +40,15 @@ class YNMainNavigator : YNMainPresenterDelegate {
     // MARK: -
     // MARK: Show root view controller
     
-    private func showRootViewController(viewController: UIViewController, inWindow: UIWindow) {
-        let navigationController = self.navigationControllerFromWindow(window: inWindow)
-        navigationController.viewControllers = [viewController]
+    private func showRootViewController(viewController: UIViewController) {
+//        let navigationController = self.navigationControllerFromWindow(window: inWindow)
+        self.navigationController?.viewControllers = [viewController]
     }
     
-    private func navigationControllerFromWindow(window: UIWindow) -> UINavigationController {
-        let navigationController = window.rootViewController as! UINavigationController
-        return navigationController
-    }
+//    private func navigationControllerFromWindow(window: UIWindow) -> UINavigationController {
+//        let navigationController = window.rootViewController as! UINavigationController
+//        return navigationController
+//    }
     
     // MARK: -
     // MARK: Show controllers on button tapps
@@ -66,7 +67,12 @@ class YNMainNavigator : YNMainPresenterDelegate {
             assertionFailure("\(Self.self): unexpectedly found YNShowResultsViewController to be nil")
             return
         }
+//        controller.modalPresentationStyle = .pageSheet
+//        controller.modalTransitionStyle = .coverVertical
+        
         self.mainPresenter?.setupShowResultsController(&controller)
+        self.navigationController?.showDetailViewController(controller, sender: self)
+        
 //        self.present(controller, animated: true)
     }
     
