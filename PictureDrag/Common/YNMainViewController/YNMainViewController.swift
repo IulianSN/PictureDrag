@@ -29,6 +29,8 @@ class YNMainViewController: UIViewController { // make presenter controller's da
             return 
         }
         
+//        self.navigationController?.navigationBar.barStyle = .black
+        
         self.newImageButton.title = dataSource.newImageButtonTitle
         self.newImageButton.colorOnTouch = dataSource.buttonHighlightedColour
         self.newImageButton.onTap({[weak self] _ in
@@ -46,6 +48,18 @@ class YNMainViewController: UIViewController { // make presenter controller's da
         self.bestResultsButton.onTap({[weak self] _ in
             self?.presenterDelegate?.buttonTapped(.bestResultsButton)
         })
+//        self.overrideUserInterfaceStyle = .dark // dark mode
+
+//        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate() // does not work for now. Find the reason
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .darkContent
     }
 }
 

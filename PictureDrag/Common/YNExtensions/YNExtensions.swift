@@ -16,16 +16,8 @@ extension UIViewController {
 extension UIView {
     // MARK: -
     // MARK: Add/Inactivate constraints
-//    func addSizeConstraints(width : Int, height : Int) {
-        //        newView.translatesAutoresizingMaskIntoConstraints = false
-        //            let views = ["newView": newView]
-        //            let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[newView(100)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
-        //            let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[newView(100)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
-        
-        //            view.addConstraints(widthConstraints)
-        //            view.addConstraints(heightConstraints)
-//    }
     
+    // better to use centerYAnchor.constraint(equalTo: touchView.centerYAnchor).isActive = true
     func centerYInView(_ view : UIView) {
         let verticalConstraint = NSLayoutConstraint(item: self,
                                                attribute: .centerY,
@@ -111,6 +103,26 @@ extension UIView {
                 }
             }
         }
+    }
+    
+    // MARK: -
+    // MARK: Corner radius extencion
+    
+    // this solution could have problems with rotating or for dinamically changing size views
+//    func cornerRadii(_ radii : CGSize, forCorners corners : UIRectCorner) {
+//        let path = UIBezierPath(roundedRect: self.bounds,
+//                                byRoundingCorners: corners, // [.topLeft, .bottomLeft]
+//                                cornerRadii: radii) //CGSize(width: 4, height: 4))
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.path = path.cgPath
+//        self.layer.mask = maskLayer
+//    }
+    
+    // and this even more simple and works better
+    func roundCorners(_ corners : CACornerMask, withRadius radius : CGFloat) {
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius // 6.0
+        self.layer.maskedCorners = corners //[.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
 }
 

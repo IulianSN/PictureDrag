@@ -24,6 +24,7 @@
 		859B28592A1B6E190072318B /* YNExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B28582A1B6E190072318B /* YNExtensions.swift */; };
 		859B285B2A1BC5250072318B /* YNMainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B285A2A1BC5250072318B /* YNMainPresenter.swift */; };
 		859B285E2A1BD2D90072318B /* YNNoImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B285D2A1BD2D90072318B /* YNNoImageButton.swift */; };
+		859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		859B28582A1B6E190072318B /* YNExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNExtensions.swift; sourceTree = "<group>"; };
 		859B285A2A1BC5250072318B /* YNMainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNMainPresenter.swift; sourceTree = "<group>"; };
 		859B285D2A1BD2D90072318B /* YNNoImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNNoImageButton.swift; sourceTree = "<group>"; };
+		859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNSelectImageFromGaleryController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 		859B28522A1B5EBE0072318B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				859F4CFC2A2B4D7E001CBAB5 /* SelectImageControllers */,
 				856BC4CE2A2378E300259E9E /* ShowGameResults */,
 				856BC4C92A23375300259E9E /* AppLogic */,
 				856BC4C62A2334A100259E9E /* Models */,
@@ -178,6 +181,14 @@
 				856BC4C02A2114BD00259E9E /* YNTouchView.swift */,
 			);
 			path = YNReusableElements;
+			sourceTree = "<group>";
+		};
+		859F4CFC2A2B4D7E001CBAB5 /* SelectImageControllers */ = {
+			isa = PBXGroup;
+			children = (
+				859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */,
+			);
+			path = SelectImageControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +264,7 @@
 			files = (
 				859B28592A1B6E190072318B /* YNExtensions.swift in Sources */,
 				856BC4C12A2114BD00259E9E /* YNTouchView.swift in Sources */,
+				859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */,
 				856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */,
 				859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */,
 				856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */,
@@ -414,10 +426,13 @@
 				DEVELOPMENT_TEAM = KMJ8RETDFS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PictureDrag/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "${PRODUCT_NAME}";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.kids-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -426,7 +441,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = YN.PictureDrag;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuliansn.picturedrag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -447,10 +462,13 @@
 				DEVELOPMENT_TEAM = KMJ8RETDFS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PictureDrag/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "${PRODUCT_NAME}";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.kids-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -459,7 +477,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = YN.PictureDrag;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuliansn.picturedrag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

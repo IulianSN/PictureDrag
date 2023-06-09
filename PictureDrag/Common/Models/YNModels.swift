@@ -7,20 +7,15 @@
 
 import UIKit
 
+// MARK: -
+// MARK: Data models
+
 struct YNResultsModel {
     var gamerName : String
     var dateString : String
     var gameResultTime: String
     var imageIdentifier : String
-    
-    var smallImage : UIImage? {
-        get {
-            if let image = YNBigImageModel(imageIdentifier: imageIdentifier).bigImage {
-                return imageModifier.makeSmallImage(image)
-            }
-            return nil
-        }
-    }
+    var smallImage : UIImage?
     
     init(gamerName : String = "Unknown",
         dateString : String,
@@ -36,19 +31,15 @@ struct YNResultsModel {
 
 struct YNBigImageModel {
     var imageIdentifier : String
-    var bigImage : UIImage? {
-        get {
-            if let image = UserDefaults.standard.object(forKey: imageIdentifier) as? UIImage {
-                return image
-            }
-            return nil
-        }
-    }
+    var bigImage : UIImage?
     
     init(imageIdentifier: String) {
         self.imageIdentifier = imageIdentifier
     }
 }
+
+// MARK: -
+// MARK: Controllers content models
 
 struct YNMainControllerSettingsModel {
     let newImageButtonTitle = "Select new image"
@@ -63,4 +54,19 @@ struct YNResultsScreenModel {
     let noResultsText = "There is no results yet. Please play the game at least once!"
     
     var gameResultsModels : Array<YNResultsModel>?
+}
+
+struct YNPickImageControllerModel {
+    let title = "Take a photo or select image"
+    let startTitle = "Start!"
+    
+    let solidButtonColor = appDesign.borderColor
+    let colorOnTouch = appDesign.colorBackgroundHighlighted
+    let colorDisabled = appDesign.disabledButtonColor
+    let lightGrayBackground = appDesign.lightGrayBackground
+    let textColor = appDesign.borderColor
+    let imageHighlighted = appDesign.imageHighlighted
+    
+    let takePhotoImageName = "take_a_photo"
+    let selectPhotoImageName = "select_a_photo"
 }

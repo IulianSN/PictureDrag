@@ -30,31 +30,33 @@ class YNMainNavigator : YNMainPresenterDelegate {
         self.mainPresenter = YNMainPresenter(navDelegate: self, interactor: self.mainInteractor)
         self.mainPresenter?.setupMainController(&controller)
         self.mainViewController = controller
-        self.navigationController = windowUnwrapped.rootViewController as? UINavigationController
-        self.showRootViewController(viewController: controller)
+        guard let navController = windowUnwrapped.rootViewController as? UINavigationController else {
+            assertionFailure("\(Self.self): unexpectedly found UINavigationController to be nil")
+            return
+        }
+        #warning("set up navigationController (nav bar style, buttons color and so on) in presenter!")
+//        self.navigationController?.navigationBar.barStyle = .black // setup style / 
+        self.navigationController = navController
+        navController.modalPresentationCapturesStatusBarAppearance = true
+        navController.show(controller, sender: self)
     }
     
     // MARK: -
     // MARK: Private functions
     
-    // MARK: -
-    // MARK: Show root view controller
     
-    private func showRootViewController(viewController: UIViewController) {
-//        let navigationController = self.navigationControllerFromWindow(window: inWindow)
-        self.navigationController?.viewControllers = [viewController]
-    }
-    
-//    private func navigationControllerFromWindow(window: UIWindow) -> UINavigationController {
-//        let navigationController = window.rootViewController as! UINavigationController
-//        return navigationController
-//    }
     
     // MARK: -
     // MARK: Show controllers on button tapps
     
     private func showNewImageController() {
-        
+        let viewController = YNSelectImageFromGaleryController.controller(inStoryboard: mainStoryboard())
+        guard var controller = viewController as? YNSelectImageFromGaleryController else {
+            assertionFailure("\(Self.self): unexpectedly found YNShowResultsViewController to be nil")
+            return
+        }
+        self.mainPresenter?.setupSelectNewImageController(&controller)
+        self.navigationController?.show(controller, sender: self)//present(controller, animated: true)
     }
     
     private func showAddedImageController() {

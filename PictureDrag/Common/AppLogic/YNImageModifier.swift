@@ -25,9 +25,11 @@ class YNImageModifier {
         if image == nil {
             return nil
         }
+//        let resized = image!.preparingThumbnail(of: imageSmallSize) // for iOS 15
+        
         let format = UIGraphicsImageRendererFormat.default()
         format.scale = 1
-        let renderer = UIGraphicsImageRenderer(size: self.imageBigSize, format: format)
+        let renderer = UIGraphicsImageRenderer(size: self.imageSmallSize, format: format)
         let resized = renderer.image { (context) in
             image!.draw(in: CGRect(origin: .zero, size: self.imageBigSize))
         }

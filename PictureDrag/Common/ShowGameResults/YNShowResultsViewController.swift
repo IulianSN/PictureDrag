@@ -8,9 +8,9 @@
 import UIKit
 
 class YNShowResultsViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var resultsTableView: UITableView!
-    @IBOutlet weak var noResultsLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var resultsTableView: UITableView!
+    @IBOutlet private weak var noResultsLabel: UILabel!
     
     weak var dataSource : YNBestResultsDataSource?
     
@@ -31,7 +31,7 @@ class YNShowResultsViewController : UIViewController, UITableViewDelegate, UITab
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // notify presenter/navigator about going away ??
+        // notify presenter/navigator about did disappear ?
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
