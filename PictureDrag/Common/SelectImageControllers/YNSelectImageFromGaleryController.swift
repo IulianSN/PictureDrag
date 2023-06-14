@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Photos
+import PhotosUI
 
-class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @IBOutlet private weak var mainContainerView: UIView! // set gray color
     @IBOutlet private weak var imageView: UIImageView!
@@ -19,20 +21,25 @@ class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControl
     @IBOutlet private weak var titleLabel: UILabel! // use custom label
     
     private var takenImage : UIImage?
-    private var editedImage : UIImage?
+    private weak var frameView : YNDragableView?
     
     weak var setupDataSource : YNImageFromGaleryDataSource?
     weak var continueDataSource : YNEnableContinueButtonDataSource?
-//    weak var delegate :
+    weak var delegate : YNInteractorDelegate?
+    
+    private var dragDirectionVertical = false
+    private var originPointProportion : CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // set 'go back' text color
         self.setUpViews()
-        
-        
-
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    deinit {
+       NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     // MARK: -
@@ -49,15 +56,15 @@ class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControl
             return
         }
         let tintColor = source.buttonHighlightedColor
+        let cameraAvailable = continueDataSource.isTakePhotoButtonEnabled()
         
         self.titleLabel.text = source.screenTitle
-// tmp here, than move to presenter
-        let cameraAvailable = UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)
-        //
+        
+        self.takePhotoButton.isEnabled = cameraAvailable
         self.takePhotoButton.setTitle("", for: .normal)
         self.takePhotoButton.setImage(source.takePhotoImage, for: .normal)
         self.takePhotoButton.setImage(source.takePhotoImage?.withTintColor(tintColor), for: .highlighted)
-        self.takePhotoButton.backgroundColor = source.solidButtonColor
+        self.takePhotoButton.backgroundColor = cameraAvailable ? source.solidButtonColor : source.colorDisabled
         self.takePhotoButton.roundCorners([.layerMinXMinYCorner, .layerMinXMaxYCorner], withRadius: 6.0)
         
         self.selectImageButton.setTitle("", for: .normal)
@@ -74,29 +81,121 @@ class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControl
                                      touchColor: source.colorOnTouch,
                                      disabledColor: source.colorDisabled)
         
-        self.startButton.disabled = !continueDataSource.enableContinueButtonForKeyComponentSelected(self.takenImage != nil)
+        self.enableStartButtonIfNeeded()
         
-//        navigationController?.navigationBar.barTintColor = UIColor.green
+        self.navigationController?.navigationBar.barTintColor = UIColor.systemGreen
     }
     
     private func showImagePickerController(takePhoto : Bool) {
         DispatchQueue.main.async {
-            
+            /**
+             using PHPickerViewController to fetch photo from library and UIImagePickerController for taking photo.
+             I could use UIImagePickerController for both operations, but wanted to chekc how newer technology works
+             P.S. had to increase min iOS ver to 14.0
+             */
+            if takePhoto {
+                let pickerController = UIImagePickerController()
+                pickerController.sourceType = .camera
+                pickerController.allowsEditing = true
+                pickerController.delegate = self
+                self.presentAnimatedViewController(pickerController)
+                #warning("show rotating animation ?? It appears just in 2-3 sec")
+            } else {
+                var phPickerConfig = PHPickerConfiguration(photoLibrary: .shared())
+                phPickerConfig.selectionLimit = 1
+                phPickerConfig.filter = .images
+                let phPickerVC = PHPickerViewController(configuration: phPickerConfig)
+                phPickerVC.delegate = self
+                self.presentAnimatedViewController(phPickerVC)
+                #warning("show rotating animation ?? It appears just in 2-3 sec")
+            }
+        }
+    }
+    
+    private func enableStartButtonIfNeeded() {
+        guard let continueDataSource = self.continueDataSource else {
+            assertionFailure("\(Self.self): unexpectedly found continueDataSource to be nil")
+            return
+        }
+        self.startButton.disabled = !continueDataSource.enableContinueButtonForKeyComponentSelected(self.takenImage != nil)
+    }
+    
+    private func presentAnimatedViewController(_ controller : UIViewController) {
+        self.present(controller, animated: true)
+    }
+    
+    private func applyImage(_ image : UIImage) {
+        DispatchQueue.main.async {
+            self.originPointProportion = 0
+            self.takenImage = image
+            self.imageView.image = image
+            self.makeFrameForImage()
+            self.enableStartButtonIfNeeded()
+        }
+    }
+    
+    private func moveToNextPositionWihtPoint(_ point : CGPoint) {
+        guard let frameView = self.frameView else {
+            assertionFailure("\(Self.self): unexpectedly found frameView to be nil")
+            return
+        }
+        guard let image = self.imageView.image else {
+            return
+        }
+        guard let delegate = self.delegate else {
+            assertionFailure("\(Self.self): unexpectedly found delegate to be nil")
+            return
         }
         
-        // move imagePickerController to Presenter
-//        UIImagePickerController
-//        let controller = UIImagePickerController()
-//        if controller.isCameraDeviceAvailable {
-//
-//        }
-        // isCameraDeviceAvailable
-        // sourceType: UIImagePickerController.SourceType
-//        controller.sourceType = .camera
-//        controller.allowsEditing = true
-//        controller.delegate = self
-//        self.mainContainerView.addSubview(controller.view)
-//        self.navigationController?.present(controller, animated: true)
+        let rect = delegate.calculateNextPositionWihtPoint(point,
+                                       selectionViewFrame: frameView.frame,
+                                          imageViewBounds: self.imageView.bounds,
+                                                imageSize: image.size)
+
+        DispatchQueue.main.async {
+            self.frameView?.frame = rect
+        }
+    }
+    
+    // TMP make it here, later move to Presenter
+    private func makeFrameForImage() {
+        guard let image = self.imageView.image else {
+            return
+        }
+        guard let delegate = self.delegate else {
+            assertionFailure("\(Self.self): unexpectedly found delegate to be nil")
+            return
+        }
+        
+        self.imageView.isUserInteractionEnabled = true
+        self.frameView?.removeFromSuperview() // if another image picked, remove previous selection zone
+        self.mainContainerView.layoutIfNeeded()
+
+        let frameForView = delegate.calculateSelectionFrame(imageViewBounds: self.imageView.bounds, imageSize: image.size)
+        
+        let frameView = YNDragableView(frame: frameForView)
+        frameView.onTouchMove { point in
+            self.moveToNextPositionWihtPoint(point)
+        }
+        let border = CAShapeLayer()
+        border.strokeColor = UIColor.systemRed.cgColor
+        border.lineDashPattern = [12, 20]
+        border.frame = frameView.bounds
+        border.lineWidth = 3.0
+        border.fillColor = nil
+        border.path = UIBezierPath(rect: frameView.bounds).cgPath
+        frameView.layer.addSublayer(border)
+        self.frameView = frameView
+        
+        let animation = CABasicAnimation(keyPath: "lineDashPhase")
+        animation.fromValue = 0
+        animation.toValue = 8
+        animation.duration = 0.2
+        animation.isCumulative = true
+        animation.repeatCount = Float.greatestFiniteMagnitude
+        border.add(animation, forKey: "lineDashPhase")
+        
+        self.imageView.addSubview(frameView)
     }
     
     // MARK: -
@@ -113,13 +212,28 @@ class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControl
     // MARK: -
     // MARK: UIImagePickerControllerDelegate
     
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: .none)
+        if !results.isEmpty {
+            let result = results[0]
+            result.itemProvider.loadObject(ofClass: UIImage.self) { reading, error in
+                guard let image = reading as? UIImage, error == nil else {
+                    return
+                }
+                self.applyImage(image)
+            }
+        }
+    }
+    
+    // MARK: -
+    // MARK: UIImagePickerControllerDelegate
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         guard let image = info[.editedImage] as? UIImage else {
                 print("No image found")
                 return
-            }
-        
+        }
+        self.applyImage(image)
     }
     
     // MARK: -
@@ -127,5 +241,27 @@ class YNSelectImageFromGaleryController : UIViewController, UIImagePickerControl
     
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         
+#warning("hide rotating animation if needed")
+    }
+    
+    // MARK: -
+    // MARK: Selectors
+    
+    @objc func rotated() {
+        if self.takenImage == nil { // don't calculate rotations if there is no image
+            return
+        }
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+        } else {
+            print("Portrait")
+        }
+        
+        DispatchQueue.main.async {
+            self.frameView?.alpha = 0
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.makeFrameForImage()
+        }
     }
 }

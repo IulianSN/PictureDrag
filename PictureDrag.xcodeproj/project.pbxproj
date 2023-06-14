@@ -25,6 +25,7 @@
 		859B285B2A1BC5250072318B /* YNMainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B285A2A1BC5250072318B /* YNMainPresenter.swift */; };
 		859B285E2A1BD2D90072318B /* YNNoImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B285D2A1BD2D90072318B /* YNNoImageButton.swift */; };
 		859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */; };
+		859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F4CFF2A35F09C001CBAB5 /* YNDragableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		859B285A2A1BC5250072318B /* YNMainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNMainPresenter.swift; sourceTree = "<group>"; };
 		859B285D2A1BD2D90072318B /* YNNoImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNNoImageButton.swift; sourceTree = "<group>"; };
 		859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNSelectImageFromGaleryController.swift; sourceTree = "<group>"; };
+		859F4CFF2A35F09C001CBAB5 /* YNDragableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			children = (
 				859B285D2A1BD2D90072318B /* YNNoImageButton.swift */,
 				856BC4C02A2114BD00259E9E /* YNTouchView.swift */,
+				859F4CFF2A35F09C001CBAB5 /* YNDragableView.swift */,
 			);
 			path = YNReusableElements;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				859B28592A1B6E190072318B /* YNExtensions.swift in Sources */,
 				856BC4C12A2114BD00259E9E /* YNTouchView.swift in Sources */,
 				859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */,
+				859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */,
 				856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */,
 				859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */,
 				856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */,
@@ -435,7 +439,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -471,7 +475,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

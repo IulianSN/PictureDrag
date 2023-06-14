@@ -51,9 +51,11 @@ protocol YNImageFromGaleryDataSource : AnyObject { // YNPickImagePresenter
 
 protocol YNEnableContinueButtonDataSource : AnyObject {
     func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool
+    func isTakePhotoButtonEnabled() -> Bool
 }
 
 typealias YNButtonTapCompletion = (UIView) -> Void
+typealias YNTouchMoveClosure = (CGPoint) -> Void 
 
 class YNMainPresenter : YNMainPresenterDelegate,
                         YNMainPresenterDataSource,
@@ -171,16 +173,13 @@ extension YNMainPresenter  { // DataSource properties and functions move here
 // MARK: YNPickImagePresenter
 
 class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnableContinueButtonDataSource  {
-    
-    // YNImageFromGaleryDataSource
-//    weak var navDelegate : YNMainPresenterDelegate? // another delegate
-    weak var interactor : YNInteractor?
+    var imageInteractor : YNSelectImageInteractor
     
     var selectImageScreenModel : YNPickImageControllerModel
     
     // MARK: -
     // MARK: YNImageFromGaleryDataSource
-    
+    #warning("MB make data source tuple properties (like imagesData, colorsData, textsData) to reduce amount of code")
     var screenTitle : String {
         return self.selectImageScreenModel.title
     }
@@ -228,12 +227,16 @@ class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnableContinueButton
         return selected
     }
     
+    func isTakePhotoButtonEnabled() -> Bool {
+        return UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)
+    }
+    
     // MARK: -
     // MARK: Initializer
     
     init(interactor: YNInteractor) {
-        self.interactor = interactor
         self.selectImageScreenModel = interactor.selectImageScreenModel()
+        self.imageInteractor = YNSelectImageInteractor()
     }
     
     // MARK: -
@@ -242,7 +245,6 @@ class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnableContinueButton
     func setupSelectNewImageController(_ controller : inout YNSelectImageFromGaleryController) {
         controller.setupDataSource = self
         controller.continueDataSource = self
-//        controller.delegate = self
-
+        controller.delegate = self.imageInteractor
     }
 }
