@@ -10,6 +10,21 @@ import UIKit
 protocol YNInteractorDelegate : AnyObject {
     func calculateSelectionFrame(imageViewBounds frame : CGRect, imageSize size : CGSize) -> CGRect
     func calculateNextPositionWihtPoint(_ point : CGPoint, selectionViewFrame selectFrame : CGRect, imageViewBounds mainFrame : CGRect, imageSize size : CGSize) -> CGRect
+    func selectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> Bool
+}
+
+protocol YNCalculateImageParametersDelegate : AnyObject {
+    func calculateNewImageSize(forImageSize size : CGSize, withMinParameter parameter : CGFloat) -> CGSize
+    func calculateNewOriginPoint(forImageSize size : CGSize, selectionFrame : CGRect) -> CGRect
+}
+
+protocol YNSelectImageDelegate : AnyObject {
+    func continueWithSelectedImageID(_ imageID : String)
+    func deleteImages(_ images : [String])
+}
+
+protocol YNImagesListDataSource : AnyObject {
+    func imagesToShow() -> [YNBigImageModel]
 }
 
 class YNInteractor {
@@ -57,17 +72,12 @@ class YNInteractor {
         return model
     }
     
-    func selectImageScreenModel() -> YNPickImageControllerModel {
-        let model = YNPickImageControllerModel()
-        return model
-    }
-    
     // MARK: -
     // MARK: Private functions
     
     private func smallImageForIdentifier(_ identifier : String) -> UIImage? {
         if let image = bigImageForIdentifier(identifier) {
-            return imageModifier.makeSmallImage(image)
+            return YNImageModifier().makeSmallImage(image)
         }
         return nil
     }
@@ -81,9 +91,14 @@ class YNInteractor {
 }
 
     
-class YNSelectImageInteractor : YNInteractorDelegate {
+class YNTakeImageInteractor : YNInteractorDelegate, YNCalculateImageParametersDelegate {
     private var dragDirectionVertical = false
     private var originPointProportion : CGFloat = 0
+    
+    func selectImageScreenModel() -> YNPickImageControllerModel {
+        let model = YNPickImageControllerModel()
+        return model
+    }
     
     // MARK: -
     // MARK: Frame calculations
@@ -98,12 +113,12 @@ class YNSelectImageInteractor : YNInteractorDelegate {
         let aspectRationContainer = rect.width / rect.height
         let multiplier : CGFloat
         
-        if aspectRationImage > aspectRationContainer { // could move horizontally
-            multiplier = rect.width / size.width//rect.height / size.height
+        if aspectRationImage > aspectRationContainer {
+            multiplier = rect.width / size.width
         } else {
-            multiplier = rect.height / size.height//rect.width / size.width
+            multiplier = rect.height / size.height
         }
-        self.dragDirectionVertical = aspectRationImage < 1.0 // dragDirectionVertical
+        self.dragDirectionVertical = aspectRationImage < 1.0
         
         return multiplier
     }
@@ -120,13 +135,18 @@ class YNSelectImageInteractor : YNInteractorDelegate {
         return rect
     }
     
+    private func minParamForSize(_ size : CGSize) -> CGFloat {
+        return size.width > size.height ? size.height : size.width
+    }
+    
     // MARK: -
     // MARK: YNInteractorDelegate
     
     func calculateSelectionFrame(imageViewBounds frame : CGRect, imageSize size : CGSize)  -> CGRect {
         let imageFrameInImageView = self.calculateImageFrame(frame: frame, size: size)
         
-        let minImageSize = imageFrameInImageView.size.width > imageFrameInImageView.size.height ? imageFrameInImageView.size.height : imageFrameInImageView.size.width
+        let minImageSize = self.minParamForSize(imageFrameInImageView.size)
+//        imageFrameInImageView.size.width > imageFrameInImageView.size.height ? imageFrameInImageView.size.height : imageFrameInImageView.size.width
         
         var xPosition = imageFrameInImageView.origin.x
         var yPosition = imageFrameInImageView.origin.y
@@ -180,5 +200,79 @@ class YNSelectImageInteractor : YNInteractorDelegate {
             rect = CGRect(x: originPoint, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
         }
         return rect
+    }
+    
+    func selectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> Bool {
+        var success = true
+        let imageFrameInImageView = self.calculateImageFrame(frame: frame, size: image.size)
+        let imageModifier = YNImageModifier()
+        let croppedImage = imageModifier.makeBigImage(cropImage: image, withFrame: frame, delegate: self)
+        // save image
+        
+        return success
+    }
+    
+    // MARK: -
+    // MARK: YNCalculateImageParametersDelegate
+    
+    func calculateNewImageSize(forImageSize size : CGSize, withMinParameter parameter : CGFloat) -> CGSize {
+        let proportion = size.width/size.height
+        let size : CGSize
+        if proportion > 1.0 {
+            size = CGSize(width: parameter * proportion, height: parameter)
+        } else {
+            size = CGSize(width: parameter, height: parameter / proportion)
+        }
+        return size
+    }
+    
+    func calculateNewOriginPoint(forImageSize size : CGSize, selectionFrame : CGRect) -> CGRect {
+        let imgProportion = size.width/size.height
+        let minSize = self.minParamForSize(size)
+        let sizeProportion = minSize / selectionFrame.size.width // could be used .height as well, they are equal
+        let point : CGPoint
+        if imgProportion > 1.0 {
+            point = CGPoint(x: selectionFrame.origin.x * sizeProportion, y: 0)
+        } else {
+            point = CGPoint(x: 0, y: selectionFrame.origin.y * sizeProportion)
+        }
+        
+        return CGRect(origin: point, size: CGSize(width: minSize, height: minSize))
+    }
+}
+
+class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
+    private var images : [YNBigImageModel]?
+    
+    func imageScreenModel() -> YNSelectedImagesControllerModel {
+        let model = YNSelectedImagesControllerModel()
+        return model
+    }
+    
+    // MARK: -
+    // MARK: YNSelectImageDelegate
+    
+    func continueWithSelectedImageID(_ imageID : String) {
+        
+    }
+    
+    func deleteImages(_ images : [String]) {
+        
+    }
+    
+    // MARK: -
+    // MARK: YNImagesListDataSource
+    
+    func imagesToShow() -> [YNBigImageModel] {
+        if self.images != nil {
+            return self.images!
+        }
+        var imagesArr = [YNBigImageModel]()
+        // fetch CoreData images IDs
+        // fethc images with that IDs
+        // create models, put to imagesArr
+        // save imagesArr to self.images
+        
+        return imagesArr
     }
 }

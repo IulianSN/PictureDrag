@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		8529C01B2A23CAAB0030D102 /* YNInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8529C01A2A23CAAB0030D102 /* YNInteractor.swift */; };
+		855426B82A3B9D9700D192A3 /* YNDataModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */; };
 		856BC4C12A2114BD00259E9E /* YNTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C02A2114BD00259E9E /* YNTouchView.swift */; };
 		856BC4C42A2140F200259E9E /* YNDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C32A2140F200259E9E /* YNDesign.swift */; };
 		856BC4C82A2334C800259E9E /* YNModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C72A2334C800259E9E /* YNModels.swift */; };
 		856BC4CB2A2337E500259E9E /* YNImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4CA2A2337E500259E9E /* YNImageModifier.swift */; };
 		856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4CF2A2379B400259E9E /* YNShowResultsViewController.swift */; };
 		856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4D12A237B4500259E9E /* YNShowResultsTableViewCell.swift */; };
+		856CF02A2A3CAD4800C24C1B /* YNCDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF0292A3CAD4800C24C1B /* YNCDManager.swift */; };
+		856CF02C2A40E7E900C24C1B /* YNExistingImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF02B2A40E7E900C24C1B /* YNExistingImagesController.swift */; };
+		856CF02E2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF02D2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift */; };
 		859B283D2A18C5C90072318B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B283C2A18C5C90072318B /* AppDelegate.swift */; };
 		859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B28402A18C5C90072318B /* YNMainViewController.swift */; };
 		859B28442A18C5C90072318B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859B28422A18C5C90072318B /* Main.storyboard */; };
@@ -30,12 +34,16 @@
 
 /* Begin PBXFileReference section */
 		8529C01A2A23CAAB0030D102 /* YNInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNInteractor.swift; sourceTree = "<group>"; };
+		855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YNDataModels.xcdatamodel; sourceTree = "<group>"; };
 		856BC4C02A2114BD00259E9E /* YNTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNTouchView.swift; sourceTree = "<group>"; };
 		856BC4C32A2140F200259E9E /* YNDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDesign.swift; sourceTree = "<group>"; };
 		856BC4C72A2334C800259E9E /* YNModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNModels.swift; sourceTree = "<group>"; };
 		856BC4CA2A2337E500259E9E /* YNImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNImageModifier.swift; sourceTree = "<group>"; };
 		856BC4CF2A2379B400259E9E /* YNShowResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNShowResultsViewController.swift; sourceTree = "<group>"; };
 		856BC4D12A237B4500259E9E /* YNShowResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNShowResultsTableViewCell.swift; sourceTree = "<group>"; };
+		856CF0292A3CAD4800C24C1B /* YNCDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNCDManager.swift; sourceTree = "<group>"; };
+		856CF02B2A40E7E900C24C1B /* YNExistingImagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNExistingImagesController.swift; sourceTree = "<group>"; };
+		856CF02D2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNWholeImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		859B28392A18C5C90072318B /* PictureDrag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDrag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859B283C2A18C5C90072318B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859B28402A18C5C90072318B /* YNMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNMainViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		855426B52A3B9D5E00D192A3 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
 		856BC4C22A2140D600259E9E /* YNDesign */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +109,7 @@
 				856BC4C22A2140D600259E9E /* YNDesign */,
 				856BC4CA2A2337E500259E9E /* YNImageModifier.swift */,
 				8529C01A2A23CAAB0030D102 /* YNInteractor.swift */,
+				856CF0292A3CAD4800C24C1B /* YNCDManager.swift */,
 			);
 			path = AppLogic;
 			sourceTree = "<group>";
@@ -125,11 +142,11 @@
 		859B283B2A18C5C90072318B /* PictureDrag */ = {
 			isa = PBXGroup;
 			children = (
+				855426B52A3B9D5E00D192A3 /* CoreDataModels */,
 				859B28522A1B5EBE0072318B /* Common */,
 				859B28512A1B5E980072318B /* Resources */,
-				859B28502A1B5CF70072318B /* Main */,
-				859B283C2A18C5C90072318B /* AppDelegate.swift */,
 				859B284A2A18C5CA0072318B /* Info.plist */,
+				859B28502A1B5CF70072318B /* Main */,
 			);
 			path = PictureDrag;
 			sourceTree = "<group>";
@@ -137,6 +154,7 @@
 		859B28502A1B5CF70072318B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				859B283C2A18C5C90072318B /* AppDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -190,6 +208,8 @@
 			isa = PBXGroup;
 			children = (
 				859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */,
+				856CF02B2A40E7E900C24C1B /* YNExistingImagesController.swift */,
+				856CF02D2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift */,
 			);
 			path = SelectImageControllers;
 			sourceTree = "<group>";
@@ -270,6 +290,7 @@
 				859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */,
 				859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */,
 				856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */,
+				855426B82A3B9D9700D192A3 /* YNDataModels.xcdatamodeld in Sources */,
 				859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */,
 				856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */,
 				8529C01B2A23CAAB0030D102 /* YNInteractor.swift in Sources */,
@@ -278,7 +299,10 @@
 				859B28572A1B64DF0072318B /* YNMainNavigator.swift in Sources */,
 				859B285E2A1BD2D90072318B /* YNNoImageButton.swift in Sources */,
 				859B285B2A1BC5250072318B /* YNMainPresenter.swift in Sources */,
+				856CF02A2A3CAD4800C24C1B /* YNCDManager.swift in Sources */,
+				856CF02E2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift in Sources */,
 				856BC4CB2A2337E500259E9E /* YNImageModifier.swift in Sources */,
+				856CF02C2A40E7E900C24C1B /* YNExistingImagesController.swift in Sources */,
 				856BC4C42A2140F200259E9E /* YNDesign.swift in Sources */,
 				859B283D2A18C5C90072318B /* AppDelegate.swift in Sources */,
 			);
@@ -514,6 +538,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */,
+			);
+			currentVersion = 855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */;
+			path = YNDataModels.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 859B28312A18C5C90072318B /* Project object */;
 }

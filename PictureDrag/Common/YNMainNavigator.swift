@@ -52,7 +52,7 @@ class YNMainNavigator : YNMainPresenterDelegate {
     private func showNewImageController() {
         let viewController = YNSelectImageFromGaleryController.controller(inStoryboard: mainStoryboard())
         guard var controller = viewController as? YNSelectImageFromGaleryController else {
-            assertionFailure("\(Self.self): unexpectedly found YNShowResultsViewController to be nil")
+            assertionFailure("\(Self.self): unexpectedly found YNSelectImageFromGaleryController to be nil")
             return
         }
         self.mainPresenter?.setupSelectNewImageController(&controller)
@@ -60,7 +60,13 @@ class YNMainNavigator : YNMainPresenterDelegate {
     }
     
     private func showAddedImageController() {
-        
+        let viewController = YNExistingImagesController.controller(inStoryboard: mainStoryboard())
+        guard var controller = viewController as? YNExistingImagesController else {
+            assertionFailure("\(Self.self): unexpectedly found YNExistingImagesController to be nil")
+            return
+        }
+        self.mainPresenter?.setupSelectedImagesController(&controller)
+        self.navigationController?.show(controller, sender: self)
     }
     
     private func showBestResultsController() {

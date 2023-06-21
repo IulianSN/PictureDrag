@@ -131,3 +131,11 @@ extension UIButton {
     
     
 }
+
+extension UICollectionViewCell {
+    class func cellForIndexPath<T : UICollectionViewCell>(_ indexPath: IndexPath, inCollectionView collectionView : UICollectionView) -> T {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: self), for: indexPath) as! T
+        
+        return cell
+    }
+}

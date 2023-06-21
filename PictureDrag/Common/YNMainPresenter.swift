@@ -49,9 +49,25 @@ protocol YNImageFromGaleryDataSource : AnyObject { // YNPickImagePresenter
     var colorGrayBackground : UIColor {get}
 }
 
-protocol YNEnableContinueButtonDataSource : AnyObject {
+protocol YNEnablePickImageButtonsDataSource : AnyObject {
     func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool
     func isTakePhotoButtonEnabled() -> Bool
+}
+
+protocol YNPreselectedImagesControllerDataSource : AnyObject { // YNPickImagePresenter
+    var screenTitle : String {get}
+    var startButtonTitle : String {get}
+    var deletePhotoImage : UIImage? {get}
+    var solidButtonColor : UIColor {get}
+    var colorOnTouch : UIColor {get}
+    var colorDisabled : UIColor {get}
+    var textColor : UIColor {get}
+    var buttonHighlightedColor : UIColor {get}
+}
+
+protocol YNEnableSelectImageButtonsDataSource : AnyObject {
+    func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool
+    func enableDeleteButtonForKeyComponentSelected(_ selected : Bool) -> Bool
 }
 
 typealias YNButtonTapCompletion = (UIView) -> Void
@@ -67,12 +83,12 @@ class YNMainPresenter : YNMainPresenterDelegate,
     private var mainScreenModel : YNMainControllerSettingsModel
     private var bestResultsModel : YNResultsScreenModel
     
-    lazy var pickImagePresenter : YNPickImagePresenter? = {
-        guard let interactor = self.interactor else {
-            assertionFailure("\(Self.self): unexpectedly found interactor to be nil")
-            return nil
-        }
-        return YNPickImagePresenter(interactor: interactor)
+    lazy var pickImagePresenter : YNPickImagePresenter = {
+        YNPickImagePresenter()
+    }()
+    
+    lazy var selectImagePresenter : YNSelectImagePresenter = {
+        YNSelectImagePresenter()
     }()
     
     // MARK: -
@@ -146,10 +162,12 @@ class YNMainPresenter : YNMainPresenterDelegate,
         }
     }
     
-    // create subpresenter, subinteractor, which will give setup controller model and deal with selected image
-    // (calculated params of movable frame, modify selected image with frame coordinates)
     func setupSelectNewImageController(_ controller : inout YNSelectImageFromGaleryController) {
-        self.pickImagePresenter?.setupSelectNewImageController(&controller)
+        self.pickImagePresenter.setupSelectNewImageController(&controller)
+    }
+    
+    func setupSelectedImagesController(_ controller : inout YNExistingImagesController) {
+        self.selectImagePresenter.setupSelectNewImageController(&controller)
     }
     
     // MARK: -
@@ -170,73 +188,134 @@ extension YNMainPresenter  { // DataSource properties and functions move here
 }
 
 // MARK: -
-// MARK: YNPickImagePresenter
+// MARK: YNSelectImagePresenter
 
-class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnableContinueButtonDataSource  {
+class YNSelectImagePresenter : YNEnableSelectImageButtonsDataSource, YNPreselectedImagesControllerDataSource {
     var imageInteractor : YNSelectImageInteractor
-    
-    var selectImageScreenModel : YNPickImageControllerModel
+    var selectImageScreenModel : YNSelectedImagesControllerModel
     
     // MARK: -
-    // MARK: YNImageFromGaleryDataSource
-    #warning("MB make data source tuple properties (like imagesData, colorsData, textsData) to reduce amount of code")
+    // MARK: Initializer
+    
+    init() {
+        self.imageInteractor = YNSelectImageInteractor()
+        self.selectImageScreenModel = self.imageInteractor.imageScreenModel()
+    }
+    
+    func setupSelectNewImageController(_ controller : inout YNExistingImagesController) {
+        controller.setupDataSource = self
+        controller.enableButtonsDataSource = self
+        controller.imagesDataSource = self.imageInteractor
+        controller.delegate = self.imageInteractor
+    }
+    
+    // MARK: -
+    // MARK: YNPreselectedImagesControllerDataSource
+    
     var screenTitle : String {
-        return self.selectImageScreenModel.title
+        self.selectImageScreenModel.title
     }
-
     var startButtonTitle : String {
-        return self.selectImageScreenModel.startTitle
+        self.selectImageScreenModel.startTitle
     }
-
-    var takePhotoImage : UIImage? {
-        return UIImage(named: self.selectImageScreenModel.takePhotoImageName)
+    var deletePhotoImage : UIImage? {
+        UIImage(named: self.selectImageScreenModel.deleteImageName)
     }
-
-    var selectPhotoImage : UIImage? {
-        return UIImage(named: self.selectImageScreenModel.selectPhotoImageName)
-    }
-
     var solidButtonColor : UIColor {
-        return self.selectImageScreenModel.solidButtonColor
+        self.selectImageScreenModel.solidButtonColor
     }
-
     var colorOnTouch : UIColor {
-        return self.selectImageScreenModel.colorOnTouch
+        self.selectImageScreenModel.colorOnTouch
     }
-    
-    var textColor : UIColor {
-        return self.selectImageScreenModel.textColor
-    }
-    
-    var buttonHighlightedColor : UIColor {
-        return self.selectImageScreenModel.imageHighlighted
-    }
-
     var colorDisabled : UIColor {
-        return self.selectImageScreenModel.colorDisabled
+        self.selectImageScreenModel.colorDisabled
     }
-    
-    var colorGrayBackground: UIColor {
-        return self.selectImageScreenModel.lightGrayBackground
+    var textColor : UIColor {
+        self.selectImageScreenModel.textColor
+    }
+    var buttonHighlightedColor : UIColor {
+        self.selectImageScreenModel.imageHighlighted
     }
     
     // MARK: -
     // MARK: YNEnableContinueButtonDataSource
     
     func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool {
-        return selected
+        selected
     }
     
-    func isTakePhotoButtonEnabled() -> Bool {
-        return UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)
+    func enableDeleteButtonForKeyComponentSelected(_ selected : Bool) -> Bool {
+        selected
     }
+}
+
+// MARK: -
+// MARK: YNPickImagePresenter
+
+class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButtonsDataSource  {
+    var imageInteractor : YNTakeImageInteractor
+    var selectImageScreenModel : YNPickImageControllerModel
     
     // MARK: -
     // MARK: Initializer
     
-    init(interactor: YNInteractor) {
-        self.selectImageScreenModel = interactor.selectImageScreenModel()
-        self.imageInteractor = YNSelectImageInteractor()
+    init() {
+        self.imageInteractor = YNTakeImageInteractor()
+        self.selectImageScreenModel = self.imageInteractor.selectImageScreenModel()
+    }
+    
+    // MARK: -
+    // MARK: YNImageFromGaleryDataSource
+    
+    var screenTitle : String {
+        self.selectImageScreenModel.title
+    }
+
+    var startButtonTitle : String {
+        self.selectImageScreenModel.startTitle
+    }
+
+    var takePhotoImage : UIImage? {
+        UIImage(named: self.selectImageScreenModel.takePhotoImageName)
+    }
+
+    var selectPhotoImage : UIImage? {
+        UIImage(named: self.selectImageScreenModel.selectPhotoImageName)
+    }
+
+    var solidButtonColor : UIColor {
+        self.selectImageScreenModel.solidButtonColor
+    }
+
+    var colorOnTouch : UIColor {
+        self.selectImageScreenModel.colorOnTouch
+    }
+    
+    var textColor : UIColor {
+        self.selectImageScreenModel.textColor
+    }
+    
+    var buttonHighlightedColor : UIColor {
+        self.selectImageScreenModel.imageHighlighted
+    }
+
+    var colorDisabled : UIColor {
+        self.selectImageScreenModel.colorDisabled
+    }
+    
+    var colorGrayBackground: UIColor {
+        self.selectImageScreenModel.lightGrayBackground
+    }
+    
+    // MARK: -
+    // MARK: YNEnableContinueButtonDataSource
+    
+    func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool {
+        selected
+    }
+    
+    func isTakePhotoButtonEnabled() -> Bool {
+        return UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)
     }
     
     // MARK: -

@@ -71,7 +71,7 @@ class YNDragableView : UIView {
         if fabsf(Float(yDelta)) > 3.0
             || fabsf(Float(xDelta)) > 3.0
         {
-            print("new point: \(currentLocation)")
+//            print("new point: \(currentLocation)")
             let point = CGPoint(x: xDelta, y: yDelta)
             self.lastTouchPoint = currentLocation
             self.touchMoveClosure?(point)

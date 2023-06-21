@@ -8,7 +8,6 @@
 import UIKit
 
 let appDesign = YNDesign()
-let imageModifier = YNImageModifier()
 
 class YNAppDependencies {
     let mainNavigator = YNMainNavigator()

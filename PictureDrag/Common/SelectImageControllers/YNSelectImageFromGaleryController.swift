@@ -24,11 +24,10 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
     private weak var frameView : YNDragableView?
     
     weak var setupDataSource : YNImageFromGaleryDataSource?
-    weak var continueDataSource : YNEnableContinueButtonDataSource?
+    weak var continueDataSource : YNEnablePickImageButtonsDataSource?
     weak var delegate : YNInteractorDelegate?
     
     private var dragDirectionVertical = false
-    private var originPointProportion : CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +79,9 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
                                      textColor : source.textColor,
                                      touchColor: source.colorOnTouch,
                                      disabledColor: source.colorDisabled)
-        
+        self.startButton.onTap { _ in
+            self.notifyDelegateStartTapped()
+        }
         self.enableStartButtonIfNeeded()
         
         self.navigationController?.navigationBar.barTintColor = UIColor.systemGreen
@@ -126,7 +127,6 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
     
     private func applyImage(_ image : UIImage) {
         DispatchQueue.main.async {
-            self.originPointProportion = 0
             self.takenImage = image
             self.imageView.image = image
             self.makeFrameForImage()
@@ -160,6 +160,7 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
     // TMP make it here, later move to Presenter
     private func makeFrameForImage() {
         guard let image = self.imageView.image else {
+            self.enableStartButtonIfNeeded()
             return
         }
         guard let delegate = self.delegate else {
@@ -177,25 +178,45 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
         frameView.onTouchMove { point in
             self.moveToNextPositionWihtPoint(point)
         }
-        let border = CAShapeLayer()
-        border.strokeColor = UIColor.systemRed.cgColor
-        border.lineDashPattern = [12, 20]
-        border.frame = frameView.bounds
-        border.lineWidth = 3.0
-        border.fillColor = nil
-        border.path = UIBezierPath(rect: frameView.bounds).cgPath
-        frameView.layer.addSublayer(border)
+        
+        frameView.layer.addSublayer({
+            let border = CAShapeLayer()
+            border.strokeColor = UIColor.systemRed.cgColor
+            border.lineDashPattern = [12, 20]
+            border.frame = frameView.bounds
+            border.lineWidth = 3.0
+            border.fillColor = nil
+            border.path = UIBezierPath(rect: frameView.bounds).cgPath
+            
+            let animation = CABasicAnimation(keyPath: "lineDashPhase")
+            animation.fromValue = 0
+            animation.toValue = 8
+            animation.duration = 0.2
+            animation.isCumulative = true
+            animation.repeatCount = Float.greatestFiniteMagnitude
+            border.add(animation, forKey: "lineDashPhase")
+            return border
+        }())
+        
         self.frameView = frameView
-        
-        let animation = CABasicAnimation(keyPath: "lineDashPhase")
-        animation.fromValue = 0
-        animation.toValue = 8
-        animation.duration = 0.2
-        animation.isCumulative = true
-        animation.repeatCount = Float.greatestFiniteMagnitude
-        border.add(animation, forKey: "lineDashPhase")
-        
         self.imageView.addSubview(frameView)
+    }
+    
+    private func notifyDelegateStartTapped() {
+        guard let image = self.imageView.image else {
+            self.enableStartButtonIfNeeded()
+            return
+        }
+        guard let delegate = self.delegate else {
+            assertionFailure("\(Self.self): unexpectedly found delegate to be nil")
+            return
+        }
+        guard let selectionView = self.frameView else {
+            assertionFailure("\(Self.self): unexpectedly found frameView to be nil")
+            return
+        }
+        
+        let frameForView = delegate.selectedImage(image, imageViewBounds: self.imageView.bounds, selectionFrame: selectionView.frame)
     }
     
     // MARK: -

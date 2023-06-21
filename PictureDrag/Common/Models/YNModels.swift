@@ -70,3 +70,16 @@ struct YNPickImageControllerModel {
     let takePhotoImageName = "take_a_photo"
     let selectPhotoImageName = "select_a_photo"
 }
+
+struct YNSelectedImagesControllerModel {
+    let title = "Select one of the images"
+    let startTitle = "Start!"
+    
+    let solidButtonColor = appDesign.borderColor
+    let colorOnTouch = appDesign.colorBackgroundHighlighted
+    let colorDisabled = appDesign.disabledButtonColor
+    let textColor = appDesign.borderColor
+    let imageHighlighted = appDesign.imageHighlighted
+    
+    let deleteImageName = "delete_image"
+}

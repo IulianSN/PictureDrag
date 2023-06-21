@@ -8,15 +8,23 @@
 import UIKit
 
 class YNImageModifier {
-    let bigImageDimensionModifier = 0.8 // make global ??
+    let bigImageDimensionModifier = 0.95
     
-    private let imageSmallSize = CGSize(width: 120, height: 120)
+    private let imageSmallSize = CGSize(width: 60, height: 60)
+    
     lazy var screenMinDimension = {
         return self.calculateScreenMinDimension()
     }()
-    lazy var imageBigSize = { // see lazy initializer !!
+    
+    lazy var imageBigSize = {
         return self.calculateBigSize()
     }()
+    
+    var graphicsFormat : UIGraphicsImageRendererFormat {
+        get {
+            return UIGraphicsImageRendererFormat.default()
+        }
+    }
     
     // MARK: -
     // MARK: Public functions
@@ -27,13 +35,38 @@ class YNImageModifier {
         }
 //        let resized = image!.preparingThumbnail(of: imageSmallSize) // for iOS 15
         
-        let format = UIGraphicsImageRendererFormat.default()
-        format.scale = 1
-        let renderer = UIGraphicsImageRenderer(size: self.imageSmallSize, format: format)
-        let resized = renderer.image { (context) in
-            image!.draw(in: CGRect(origin: .zero, size: self.imageBigSize))
+//        let format = UIGraphicsImageRendererFormat.default()
+//        format.scale = 1 // don't set this value, let it be pixels per point of current device
+        let renderer = UIGraphicsImageRenderer(size: self.imageSmallSize, format: self.graphicsFormat)
+        let resized = renderer.image { _ in
+            image!.draw(in: CGRect(origin: .zero, size: self.imageSmallSize))
         }
         return resized
+    }
+    
+    func makeBigImage(cropImage image : UIImage, withFrame frame : CGRect, delegate : YNCalculateImageParametersDelegate) -> UIImage? {
+        // decrease image size if needed
+        var image = image
+        let imageMinSize = image.size.width < image.size.height ? image.size.width : image.size.height
+        let scale = self.graphicsFormat.scale
+        let scaled = self.screenMinDimension * scale * self.bigImageDimensionModifier
+        
+        if imageMinSize > scaled {
+            let newImageSize = delegate.calculateNewImageSize(forImageSize: image.size, withMinParameter: scaled)
+            
+            let renderer = UIGraphicsImageRenderer(size: newImageSize, format: self.graphicsFormat)
+            image = renderer.image { _ in
+                image.draw(in: CGRect(origin: .zero, size: newImageSize))
+            }
+        }
+        
+        let finishRect = delegate.calculateNewOriginPoint(forImageSize: image.size, selectionFrame: frame)
+        let renderer = UIGraphicsImageRenderer(size: finishRect.size, format: self.graphicsFormat)
+        image = renderer.image { _ in
+            image.draw(in: finishRect)
+        }
+
+        return image
     }
     
     /**

@@ -126,8 +126,8 @@
             filePath = "PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "navigationController(_:didShow:animated:)"
             landmarkType = "7">
             <Locations>
@@ -176,22 +176,176 @@
                   endingLineNumber = "351"
                   offsetFromSymbolStart = "44">
                </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df853f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "245"
+                  endingLineNumber = "245"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df834d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "259"
+                  endingLineNumber = "259"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df82a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "264"
+                  endingLineNumber = "264"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df82ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df8245"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "E871735C-1001-446F-BD4A-4C8F3F1C2978 - 866bfc4245df826a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PictureDrag.YNSelectImageFromGaleryController.navigationController(_: __C.UINavigationController, didShow: __C.UIViewController, animated: Swift.Bool) -&gt; ()"
+                  moduleName = "PictureDrag"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ulian/SampleApps/PictureDrag/PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "44">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "27F57439-435A-42D3-8935-09A6425E03E8"
+            uuid = "9CDEF787-17B3-4679-BBD0-0B3A4CB12A8E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "makeFrameForImage()"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "setUpViews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "173AAA50-5E18-4D67-83F0-F38F81AE000B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/SelectImageControllers/YNSelectImageFromGaleryController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "notifyDelegateStartTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48728B72-BF63-4FE7-8C32-4A4CA6D96216"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/AppLogic/YNImageModifier.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "makeBigImage(cropImage:withFrame:delegate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "58528C3F-C925-475A-BCA8-0FA838C42CF4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/SelectImageControllers/YNExistingImagesController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "collectionView(_:layout:sizeForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "077E6C8F-30D6-4D25-933D-D276E8553166"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PictureDrag/Common/SelectImageControllers/YNExistingImagesController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "notifyDelegateStartTapped()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
