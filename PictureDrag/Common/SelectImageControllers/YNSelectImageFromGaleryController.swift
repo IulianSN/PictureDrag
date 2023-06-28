@@ -129,6 +129,7 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
         DispatchQueue.main.async {
             self.takenImage = image
             self.imageView.image = image
+            self.delegate?.newImageSelected()
             self.makeFrameForImage()
             self.enableStartButtonIfNeeded()
         }

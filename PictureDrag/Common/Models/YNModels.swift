@@ -74,12 +74,17 @@ struct YNPickImageControllerModel {
 struct YNSelectedImagesControllerModel {
     let title = "Select one of the images"
     let startTitle = "Start!"
+    let noImagesTitle = "There is no mages yet. Please play a game at least once!"
+    let cancelButtonTitle = "Cancel"
     
     let solidButtonColor = appDesign.borderColor
+    let solidButtonTextColor = appDesign.solidButtonTextColor
     let colorOnTouch = appDesign.colorBackgroundHighlighted
     let colorDisabled = appDesign.disabledButtonColor
     let textColor = appDesign.borderColor
     let imageHighlighted = appDesign.imageHighlighted
     
     let deleteImageName = "delete_image"
+    let celectedImageName = "celected_image"
+    let uncelectedImageName = "uncelected_image"
 }

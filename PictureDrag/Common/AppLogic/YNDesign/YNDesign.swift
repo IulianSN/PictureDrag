@@ -17,6 +17,7 @@ struct YNDesign {
     let disabledButtonColor = UIColor.systemGray4
     let lightGrayBackground = UIColor.systemGray6
     let imageHighlighted = UIColor(red: 203/255, green: 237/255, blue: 207/255, alpha: 1) // 219/255
+    let solidButtonTextColor = UIColor.white
     
     // fonts for labels
 }

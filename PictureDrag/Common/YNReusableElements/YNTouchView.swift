@@ -11,18 +11,23 @@ class YNTouchView : UIView {
     // MARK: -
     // MARK: Private properties
     
+    private let pressTimeInterval = 0.8
     private var touchEndedCompletion : YNButtonTapCompletion?
+    private var pressEndedCompletion : YNButtonTapCompletion?
     private var isTouchInSelf = false
+    private var touchTimeInterval : TimeInterval?
     
     // MARK: -
     // MARK: Public properties
     
-    var colorOnTouch = UIColor.systemGray6
-    var colorNormal = UIColor.systemBackground {
+    var colorOnTouch = UIColor.clear
+    var colorNormal = UIColor.clear {
         didSet {
             self.backgroundColor = colorNormal
         }
     }
+    var supportPressEvent = false
+    
     
     // MARK: -
     // MARK: View life cycle
@@ -44,6 +49,10 @@ class YNTouchView : UIView {
         touchEndedCompletion = closure
     }
     
+    func onPress(_ closure : @escaping YNButtonTapCompletion) {
+        pressEndedCompletion = closure
+    }
+    
     // MARK: -
     // MARK: Private functions
     
@@ -57,10 +66,22 @@ class YNTouchView : UIView {
         touchEndedCompletion?(self)
     }
     
+    private func pressEndedSuccessfully() {
+        pressEndedCompletion?(self)
+    }
+    
     private func touchEnded() {
         self.backgroundColor = self.colorNormal
         if isTouchInSelf {
-            touchEndedSuccessfully()
+            if supportPressEvent && self.touchTimeInterval != nil {
+                let currentInterval = Date().timeIntervalSince1970
+                if currentInterval - self.touchTimeInterval! > self.pressTimeInterval { // press time
+                    self.touchTimeInterval = nil
+                    self.pressEndedSuccessfully()
+                    return
+                }
+            }
+            self.touchEndedSuccessfully()
         }
     }
     
@@ -68,6 +89,10 @@ class YNTouchView : UIView {
     // MARK: Touches events functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if supportPressEvent {
+            self.touchTimeInterval = Date().timeIntervalSince1970
+            // save timestamp
+        }
         isTouchInSelf = true
         self.backgroundColor = self.colorOnTouch
     }

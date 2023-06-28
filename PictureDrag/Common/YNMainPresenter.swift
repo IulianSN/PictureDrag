@@ -54,22 +54,6 @@ protocol YNEnablePickImageButtonsDataSource : AnyObject {
     func isTakePhotoButtonEnabled() -> Bool
 }
 
-protocol YNPreselectedImagesControllerDataSource : AnyObject { // YNPickImagePresenter
-    var screenTitle : String {get}
-    var startButtonTitle : String {get}
-    var deletePhotoImage : UIImage? {get}
-    var solidButtonColor : UIColor {get}
-    var colorOnTouch : UIColor {get}
-    var colorDisabled : UIColor {get}
-    var textColor : UIColor {get}
-    var buttonHighlightedColor : UIColor {get}
-}
-
-protocol YNEnableSelectImageButtonsDataSource : AnyObject {
-    func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool
-    func enableDeleteButtonForKeyComponentSelected(_ selected : Bool) -> Bool
-}
-
 typealias YNButtonTapCompletion = (UIView) -> Void
 typealias YNTouchMoveClosure = (CGPoint) -> Void 
 
@@ -188,71 +172,9 @@ extension YNMainPresenter  { // DataSource properties and functions move here
 }
 
 // MARK: -
-// MARK: YNSelectImagePresenter
-
-class YNSelectImagePresenter : YNEnableSelectImageButtonsDataSource, YNPreselectedImagesControllerDataSource {
-    var imageInteractor : YNSelectImageInteractor
-    var selectImageScreenModel : YNSelectedImagesControllerModel
-    
-    // MARK: -
-    // MARK: Initializer
-    
-    init() {
-        self.imageInteractor = YNSelectImageInteractor()
-        self.selectImageScreenModel = self.imageInteractor.imageScreenModel()
-    }
-    
-    func setupSelectNewImageController(_ controller : inout YNExistingImagesController) {
-        controller.setupDataSource = self
-        controller.enableButtonsDataSource = self
-        controller.imagesDataSource = self.imageInteractor
-        controller.delegate = self.imageInteractor
-    }
-    
-    // MARK: -
-    // MARK: YNPreselectedImagesControllerDataSource
-    
-    var screenTitle : String {
-        self.selectImageScreenModel.title
-    }
-    var startButtonTitle : String {
-        self.selectImageScreenModel.startTitle
-    }
-    var deletePhotoImage : UIImage? {
-        UIImage(named: self.selectImageScreenModel.deleteImageName)
-    }
-    var solidButtonColor : UIColor {
-        self.selectImageScreenModel.solidButtonColor
-    }
-    var colorOnTouch : UIColor {
-        self.selectImageScreenModel.colorOnTouch
-    }
-    var colorDisabled : UIColor {
-        self.selectImageScreenModel.colorDisabled
-    }
-    var textColor : UIColor {
-        self.selectImageScreenModel.textColor
-    }
-    var buttonHighlightedColor : UIColor {
-        self.selectImageScreenModel.imageHighlighted
-    }
-    
-    // MARK: -
-    // MARK: YNEnableContinueButtonDataSource
-    
-    func enableContinueButtonForKeyComponentSelected(_ selected : Bool) -> Bool {
-        selected
-    }
-    
-    func enableDeleteButtonForKeyComponentSelected(_ selected : Bool) -> Bool {
-        selected
-    }
-}
-
-// MARK: -
 // MARK: YNPickImagePresenter
 
-class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButtonsDataSource  {
+class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButtonsDataSource {
     var imageInteractor : YNTakeImageInteractor
     var selectImageScreenModel : YNPickImageControllerModel
     
