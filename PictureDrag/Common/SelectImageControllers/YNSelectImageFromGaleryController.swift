@@ -217,7 +217,10 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
             return
         }
         
-        let frameForView = delegate.selectedImage(image, imageViewBounds: self.imageView.bounds, selectionFrame: selectionView.frame)
+        let success = delegate.selectedImage(image, imageViewBounds: self.imageView.bounds, selectionFrame: selectionView.frame)
+        if success {
+            // continue game
+        }
     }
     
     // MARK: -

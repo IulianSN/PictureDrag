@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8529C01B2A23CAAB0030D102 /* YNInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8529C01A2A23CAAB0030D102 /* YNInteractor.swift */; };
-		855426B82A3B9D9700D192A3 /* YNDataModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */; };
 		856BC4C12A2114BD00259E9E /* YNTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C02A2114BD00259E9E /* YNTouchView.swift */; };
 		856BC4C42A2140F200259E9E /* YNDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C32A2140F200259E9E /* YNDesign.swift */; };
 		856BC4C82A2334C800259E9E /* YNModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856BC4C72A2334C800259E9E /* YNModels.swift */; };
@@ -33,11 +32,13 @@
 		859B285E2A1BD2D90072318B /* YNNoImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B285D2A1BD2D90072318B /* YNNoImageButton.swift */; };
 		859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */; };
 		859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859F4CFF2A35F09C001CBAB5 /* YNDragableView.swift */; };
+		85DA25222A5C96E1000D7F6B /* YNCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25202A5C96E1000D7F6B /* YNCoreData.xcdatamodeld */; };
+		85DA25282A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25242A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift */; };
+		85DA252A2A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25262A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8529C01A2A23CAAB0030D102 /* YNInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNInteractor.swift; sourceTree = "<group>"; };
-		855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YNDataModels.xcdatamodel; sourceTree = "<group>"; };
 		856BC4C02A2114BD00259E9E /* YNTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNTouchView.swift; sourceTree = "<group>"; };
 		856BC4C32A2140F200259E9E /* YNDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDesign.swift; sourceTree = "<group>"; };
 		856BC4C72A2334C800259E9E /* YNModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNModels.swift; sourceTree = "<group>"; };
@@ -64,6 +65,9 @@
 		859B285D2A1BD2D90072318B /* YNNoImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNNoImageButton.swift; sourceTree = "<group>"; };
 		859F4CFD2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNSelectImageFromGaleryController.swift; sourceTree = "<group>"; };
 		859F4CFF2A35F09C001CBAB5 /* YNDragableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragableView.swift; sourceTree = "<group>"; };
+		85DA25212A5C96E1000D7F6B /* YNCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YNCoreData.xcdatamodel; sourceTree = "<group>"; };
+		85DA25242A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YNCDImageModel+CDClass+CDProps.swift"; sourceTree = "<group>"; };
+		85DA25262A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YNCDResultsModel+CDClass+CDProps.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,14 +81,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		855426B52A3B9D5E00D192A3 /* CoreDataModels */ = {
-			isa = PBXGroup;
-			children = (
-				855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */,
-			);
-			path = CoreDataModels;
-			sourceTree = "<group>";
-		};
 		856BC4C22A2140D600259E9E /* YNDesign */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +111,6 @@
 				856BC4C22A2140D600259E9E /* YNDesign */,
 				856BC4CA2A2337E500259E9E /* YNImageModifier.swift */,
 				8529C01A2A23CAAB0030D102 /* YNInteractor.swift */,
-				856CF0292A3CAD4800C24C1B /* YNCDManager.swift */,
 				856CF02F2A47270000C24C1B /* YNSelectImageInteractor.swift */,
 				856CF0312A47277D00C24C1B /* YNTakeImageInteractor.swift */,
 			);
@@ -150,7 +145,7 @@
 		859B283B2A18C5C90072318B /* PictureDrag */ = {
 			isa = PBXGroup;
 			children = (
-				855426B52A3B9D5E00D192A3 /* CoreDataModels */,
+				85DA251F2A5C96BB000D7F6B /* CoreData */,
 				859B28522A1B5EBE0072318B /* Common */,
 				859B28512A1B5E980072318B /* Resources */,
 				859B284A2A18C5CA0072318B /* Info.plist */,
@@ -221,6 +216,17 @@
 				856CF02D2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift */,
 			);
 			path = SelectImageControllers;
+			sourceTree = "<group>";
+		};
+		85DA251F2A5C96BB000D7F6B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				85DA25242A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift */,
+				85DA25262A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift */,
+				856CF0292A3CAD4800C24C1B /* YNCDManager.swift */,
+				85DA25202A5C96E1000D7F6B /* YNCoreData.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,7 +306,6 @@
 				859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */,
 				859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */,
 				856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */,
-				855426B82A3B9D9700D192A3 /* YNDataModels.xcdatamodeld in Sources */,
 				856CF0342A49BEB500C24C1B /* YNSelectImagePresenter.swift in Sources */,
 				859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */,
 				856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */,
@@ -311,9 +316,12 @@
 				859B28572A1B64DF0072318B /* YNMainNavigator.swift in Sources */,
 				859B285E2A1BD2D90072318B /* YNNoImageButton.swift in Sources */,
 				859B285B2A1BC5250072318B /* YNMainPresenter.swift in Sources */,
+				85DA252A2A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift in Sources */,
 				856CF02A2A3CAD4800C24C1B /* YNCDManager.swift in Sources */,
 				856CF02E2A41B66600C24C1B /* YNWholeImageCollectionViewCell.swift in Sources */,
+				85DA25282A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift in Sources */,
 				856BC4CB2A2337E500259E9E /* YNImageModifier.swift in Sources */,
+				85DA25222A5C96E1000D7F6B /* YNCoreData.xcdatamodeld in Sources */,
 				856CF02C2A40E7E900C24C1B /* YNExistingImagesController.swift in Sources */,
 				856BC4C42A2140F200259E9E /* YNDesign.swift in Sources */,
 				859B283D2A18C5C90072318B /* AppDelegate.swift in Sources */,
@@ -552,13 +560,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		855426B62A3B9D9700D192A3 /* YNDataModels.xcdatamodeld */ = {
+		85DA25202A5C96E1000D7F6B /* YNCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */,
+				85DA25212A5C96E1000D7F6B /* YNCoreData.xcdatamodel */,
 			);
-			currentVersion = 855426B72A3B9D9700D192A3 /* YNDataModels.xcdatamodel */;
-			path = YNDataModels.xcdatamodeld;
+			currentVersion = 85DA25212A5C96E1000D7F6B /* YNCoreData.xcdatamodel */;
+			path = YNCoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

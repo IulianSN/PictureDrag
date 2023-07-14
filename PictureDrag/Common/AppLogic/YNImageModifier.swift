@@ -47,27 +47,67 @@ class YNImageModifier {
     func makeBigImage(cropImage image : UIImage, withFrame frame : CGRect, delegate : YNCalculateImageParametersDelegate) -> UIImage? {
         // decrease image size if needed
         var image = image
-        let imageMinSize = image.size.width < image.size.height ? image.size.width : image.size.height
+        guard let cgImage = image.cgImage else {
+            return nil
+        }
+
+        let cgImgRect = delegate.calculateNewOriginPoint(forImageSize: CGSize(width: cgImage.width, height: cgImage.height), selectionFrame: frame)
+
+        guard let croppedCGImg: CGImage = cgImage.cropping(to: cgImgRect) else {
+            return nil
+        }
+        let croppedImage: UIImage = UIImage(cgImage: croppedCGImg)
+        
         let scale = self.graphicsFormat.scale
         let scaled = self.screenMinDimension * scale * self.bigImageDimensionModifier
+        let finalRect = CGRect(origin: .zero, size: CGSize(width: scaled, height: scaled))
         
-        if imageMinSize > scaled {
-            let newImageSize = delegate.calculateNewImageSize(forImageSize: image.size, withMinParameter: scaled)
-            
-            let renderer = UIGraphicsImageRenderer(size: newImageSize, format: self.graphicsFormat)
-            image = renderer.image { _ in
-                image.draw(in: CGRect(origin: .zero, size: newImageSize))
-            }
-        }
-        
-        let finishRect = delegate.calculateNewOriginPoint(forImageSize: image.size, selectionFrame: frame)
-        let renderer = UIGraphicsImageRenderer(size: finishRect.size, format: self.graphicsFormat)
+        let renderer = UIGraphicsImageRenderer(size: finalRect.size, format: self.graphicsFormat)
         image = renderer.image { _ in
-            image.draw(in: finishRect)
+            croppedImage.draw(in: finalRect)
         }
 
         return image
     }
+    
+    func saveImage(_ image : UIImage) -> String? {
+        let imageID = UUID().uuidString
+        guard let fileURL = self.urlWithImageID(imageID) else {
+            return nil
+        }
+        guard let data = image.jpegData(compressionQuality: 1) else {
+            return nil
+        }
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            print("error saving file with error \(error)")
+            return nil
+        }
+        return imageID
+    }
+    
+    func getImage(withImageID identifier : String) -> UIImage? {
+        guard let fileURL = self.urlWithImageID(identifier) else {
+            return nil
+        }
+        let image = UIImage(contentsOfFile: fileURL.path)
+        return image
+    }
+    
+    func deleteImage(forImageID identifier : String) { // return success ??
+        guard let fileURL = self.urlWithImageID(identifier) else {
+            return
+        }
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+            } catch {
+                print("couldn't remove file at path \(error)")
+            }
+        }
+    }
+    
     
     /**
      when selecting image - check if it is not too small:
@@ -77,6 +117,14 @@ class YNImageModifier {
     
     // MARK: -
     // MARK: Private functions
+    
+    private func urlWithImageID(_ identifier : String) -> URL? {
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return nil
+        }
+        let fileURL = documentsDirectory.appendingPathComponent(identifier)
+        return fileURL
+    }
     
     private func calculateScreenMinDimension() -> Double {
         guard let window : UIWindow = UIApplication.shared.windows.first else {

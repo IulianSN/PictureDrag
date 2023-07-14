@@ -125,11 +125,22 @@ class YNTakeImageInteractor : YNInteractorDelegate, YNCalculateImageParametersDe
     }
     
     func selectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> Bool {
-        var success = true
-        let imageFrameInImageView = self.calculateImageFrame(frame: frame, size: image.size)
+        var success = false
         let imageModifier = YNImageModifier()
-        let croppedImage = imageModifier.makeBigImage(cropImage: image, withFrame: frame, delegate: self)
-        // save image
+        let imageFrame = self.calculateImageFrame(frame: mainFrame, size: image.size)
+        let celectionFrameInImageFrame = CGRect(x: frame.origin.x - imageFrame.origin.x,
+                                                y: frame.origin.y - imageFrame.origin.y,
+                                            width: frame.width,
+                                           height: frame.height)
+        if let croppedImage = imageModifier.makeBigImage(cropImage: image,
+                                                         withFrame: celectionFrameInImageFrame,
+                                                          delegate: self)
+        {
+            if let identifier = imageModifier.saveImage(croppedImage) {
+                YNCDManager.shared.saveImageModel(withID: identifier)
+                success = true
+            }
+        }
         
         return success
     }

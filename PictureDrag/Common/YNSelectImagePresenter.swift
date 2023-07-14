@@ -15,6 +15,7 @@ protocol YNPreselectedImagesControllerDataSource : AnyObject { // YNPickImagePre
     var deletePhotoImage : UIImage? {get}
     var celectedImage : UIImage? {get}
     var uncelectedImage : UIImage? {get}
+    var placeholderImage : UIImage? {get}
     var solidButtonColor : UIColor {get}
     var solidButtonTextColor : UIColor {get}
     var colorOnTouch : UIColor {get}
@@ -64,6 +65,9 @@ class YNSelectImagePresenter : YNPreselectedImagesControllerDataSource {
     }
     var uncelectedImage : UIImage? {
         UIImage(named: self.selectImageScreenModel.uncelectedImageName)?.withTintColor(self.selectImageScreenModel.solidButtonColor)
+    }
+    var placeholderImage : UIImage? {
+        UIImage(named:self.selectImageScreenModel.placeholderImageName)?.withTintColor(UIColor.systemGray6)
     }
     var solidButtonColor : UIColor {
         self.selectImageScreenModel.solidButtonColor

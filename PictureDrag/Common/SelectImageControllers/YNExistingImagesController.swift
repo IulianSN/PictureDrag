@@ -20,13 +20,14 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
     @IBOutlet private weak var noImagesLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     
-    private var imagesNumber : Int {
-        get {
-            self.imagesDataSource?.numberOfImagesToShow ?? 0
-        }
-    }
+//    private var imagesNumber : Int {
+//        get {
+//            self.imagesDataSource?.numberOfImagesToShow ?? 0
+//        }
+//    }
     private var selectedImage : UIImage?
     private var unselectedImage : UIImage?
+    private var placeholderImage : UIImage?
     
     weak var setupDataSource : YNPreselectedImagesControllerDataSource?
     weak var imagesDataSource : YNImagesListDataSource?
@@ -70,6 +71,7 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
         
         self.selectedImage = source.celectedImage
         self.unselectedImage = source.uncelectedImage
+        self.placeholderImage = source.placeholderImage
         
         self.noImagesLabel.text = source.noImagesTitle
         self.showNoImagesLabelIfNeeded()
@@ -129,10 +131,18 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
             self.imagesCollectionView.reloadData()
             self.enableDeleteBlockIfNeeded()
             self.enableStartButtonIfNeeded()
+            self.showNoImagesLabelIfNeeded()
         }
     }
     
-    private func setupCell(_ cell : YNWholeImageCollectionViewCell, withID id : Int) {
+    private func updateCollection(forPath path : IndexPath) {
+        DispatchQueue.main.async {
+            self.imagesCollectionView.reloadItems(at: [path])
+        }
+    }
+    
+    private func setupCell(_ cell : YNWholeImageCollectionViewCell, withPath path : IndexPath) {
+        let id = path.row
         guard let paramSource = self.imagesDataSource else {
             assertionFailure("\(Self.self): unexpectedly found imagesDataSource to be nil")
             return
@@ -143,7 +153,20 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
         }
         
         cell.cellID = id
-        cell.mainImage = paramSource.imageForID(id)
+        if let img = paramSource.imageForID(id) {
+            cell.mainImage = img
+        } else {
+            cell.mainImage = self.placeholderImage
+            paramSource.fetchImageForIndex(id) {[weak self] success in
+                if success {
+                    self?.updateCollection(forPath: path)
+                }
+//                else {
+                #warning("MB show description like 'smth went wrong'")
+//                }
+            }
+//            cell.mainImage = img
+        }
         cell.selectionColor = source.solidButtonColor
         
         let image : UIImage?
@@ -167,7 +190,11 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
     }
     
     private func showNoImagesLabelIfNeeded() {
-        self.noImagesLabel.alpha = self.imagesNumber > 0 ? 0 : 1
+        guard let paramSource = self.imagesDataSource else {
+            assertionFailure("\(Self.self): unexpectedly found imagesDataSource to be nil")
+            return
+        }
+        self.noImagesLabel.alpha = paramSource.showNoImagesLabel() ? 1 : 0
     }
     
     // MARK: -
@@ -187,12 +214,12 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
     // MARK: UICollectionView Delegate and DataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imagesNumber
+        return self.imagesDataSource?.numberOfImagesToShow ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = YNWholeImageCollectionViewCell.cellForIndexPath(indexPath, inCollectionView: collectionView) as! YNWholeImageCollectionViewCell
-        self.setupCell(cell, withID: indexPath.row)
+        self.setupCell(cell, withPath: indexPath)
         
         return cell
     }

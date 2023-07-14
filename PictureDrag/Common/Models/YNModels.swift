@@ -29,7 +29,7 @@ struct YNResultsModel {
     }
 }
 
-struct YNBigImageModel {
+class YNBigImageModel {
     var imageIdentifier : String
     var bigImage : UIImage?
     
@@ -72,7 +72,7 @@ struct YNPickImageControllerModel {
 }
 
 struct YNSelectedImagesControllerModel {
-    let title = "Select one of the images"
+    let title = "Select one of the images or remove unneeded"
     let startTitle = "Start!"
     let noImagesTitle = "There is no mages yet. Please play a game at least once!"
     let cancelButtonTitle = "Cancel"
@@ -85,6 +85,7 @@ struct YNSelectedImagesControllerModel {
     let imageHighlighted = appDesign.imageHighlighted
     
     let deleteImageName = "delete_image"
+    let placeholderImageName = "placeholder_image"
     let celectedImageName = "celected_image"
     let uncelectedImageName = "uncelected_image"
 }

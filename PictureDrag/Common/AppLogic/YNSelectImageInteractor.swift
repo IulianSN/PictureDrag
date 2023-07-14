@@ -25,6 +25,8 @@ protocol YNImagesListDataSource : AnyObject {
     func isSelected(forID id : Int) -> Bool
     func isContinueButtonEnabled() -> Bool
     func isDeleteBlockEnabled() -> Bool
+    func showNoImagesLabel() -> Bool
+    func fetchImageForIndex(_ index : Int, _ completion : (Bool) -> ())
 }
 
 class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
@@ -41,7 +43,7 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
             }
         }
     }
-    private var idsToDelete = [Int]() // how to perform delete ??
+    private var idsToDelete = [Int]() // remove images from local storage && imageModels form CD
     
     func imageScreenModel() -> YNSelectedImagesControllerModel {
         let model = YNSelectedImagesControllerModel()
@@ -72,30 +74,30 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
     
     func updateData() {
         // mock models
-        var imgModel = YNBigImageModel(imageIdentifier: "111222")
-        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
-        imgModel = YNBigImageModel(imageIdentifier: "222333")
-        imgModel.bigImage = UIImage(named: "take_a_photo")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
-        imgModel = YNBigImageModel(imageIdentifier: "111333")
-        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
-        imgModel = YNBigImageModel(imageIdentifier: "111444")
-        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
-        imgModel = YNBigImageModel(imageIdentifier: "111555")
-        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
-        imgModel = YNBigImageModel(imageIdentifier: "111666")
-        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
-        self.images.append(imgModel)
+//        var imgModel = YNBigImageModel(imageIdentifier: "111222")
+//        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
+//        imgModel = YNBigImageModel(imageIdentifier: "222333")
+//        imgModel.bigImage = UIImage(named: "take_a_photo")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
+//        imgModel = YNBigImageModel(imageIdentifier: "111333")
+//        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
+//        imgModel = YNBigImageModel(imageIdentifier: "111444")
+//        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
+//        imgModel = YNBigImageModel(imageIdentifier: "111555")
+//        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
+//        imgModel = YNBigImageModel(imageIdentifier: "111666")
+//        imgModel.bigImage = UIImage(named: "placeholder_image")?.withTintColor(UIColor.black)
+//        self.images.append(imgModel)
         //
-        
-        // fetch CoreData images IDs
-        // fethc images with that IDs
-        // create models, put to imagesArr
-        // save imagesArr to self.images
+        let imageIDs = YNCDManager.shared.loadImages()
+        for value in imageIDs {
+            let model = YNBigImageModel(imageIdentifier: value)
+            self.images.append(model)
+        }
     }
     
     func cleanData() {
@@ -117,6 +119,7 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
             }
         }
         self.images = newArray
+        // remove images from local storage && imageModels form CD
         self.idsToDelete = [Int]()
         #warning("Notify core data manager to delete unneeded models")
     }
@@ -174,5 +177,17 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
     
     func isDeleteBlockEnabled() -> Bool {
         self.deletionMode
+    }
+    
+    func showNoImagesLabel() -> Bool {
+        self.images.isEmpty
+    }
+    
+    func fetchImageForIndex(_ index : Int, _ completion : (Bool) -> ()) {
+        let imgModifier = YNImageModifier()
+        let model = self.images[index]
+        let img = imgModifier.getImage(withImageID: model.imageIdentifier)
+        model.bigImage = img
+        completion(img != nil)
     }
 }
