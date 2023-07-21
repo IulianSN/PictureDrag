@@ -11,12 +11,8 @@ protocol YNMainPresenterDelegate : AnyObject {
     func buttonTapped(_ button : YNMainControllerButtonTapped)
 }
 
-// make protocol to navigate further from YNSelectImageFromGaleryController && YNSelecUsedImagesController
-
-protocol YNPickImagePresenterDelegate : AnyObject {
-    // mb notify on viewDidDisappear && in mainNavigator remove controller from navController.viewControllers stack
-//    func imageSelected() //
-    func startTappedWithModel(_ model : YNBigImageModel) // Start tapped
+protocol YNContinueWithImageDelegate : AnyObject {
+    func continueWith(imageModel model : YNBigImageModel)
 }
 
 protocol YNMainPresenterDataSource : AnyObject {
@@ -74,6 +70,8 @@ class YNMainPresenter : YNMainPresenterDelegate,
     lazy var selectImagePresenter : YNSelectImagePresenter = {
         YNSelectImagePresenter()
     }()
+    
+    var dragPresenter : YNDragPresenter?
     
     // MARK: -
     // MARK: YNMainPresenterDataSource accessors
@@ -146,12 +144,19 @@ class YNMainPresenter : YNMainPresenterDelegate,
         }
     }
     
-    func setupSelectNewImageController(_ controller : inout YNSelectImageFromGaleryController) {
+    func setupSelectNewImageController(_ controller : inout YNSelectImageFromGaleryController, sender : YNContinueWithImageDelegate) {
         self.pickImagePresenter.setupSelectNewImageController(&controller)
+        self.pickImagePresenter.continueDelegate = sender
     }
     
-    func setupSelectedImagesController(_ controller : inout YNExistingImagesController) {
-        self.selectImagePresenter.setupSelectNewImageController(&controller)
+    func setupSelectedImagesController(_ controller : inout YNExistingImagesController, sender : YNContinueWithImageDelegate) {
+        self.selectImagePresenter.setupSelectExistingImageController(&controller)
+        self.selectImagePresenter.continueDelegate = sender
+    }
+    
+    func setupDragController(_ controller : inout YNDragViewController, withModel model : YNBigImageModel) {
+        self.dragPresenter = YNDragPresenter.init(model: model)
+        self.dragPresenter?.setupDragController(&controller)
     }
     
     // MARK: -
@@ -164,19 +169,20 @@ class YNMainPresenter : YNMainPresenterDelegate,
 }
 
 
-// MARK: -
-// MARK: DataSource properties and functions
-
-extension YNMainPresenter  { // DataSource properties and functions move here
-
-}
+//// MARK: -
+//// MARK: DataSource properties and functions
+//
+//extension YNMainPresenter  { // DataSource properties and functions move here
+//
+//}
 
 // MARK: -
 // MARK: YNPickImagePresenter
 
-class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButtonsDataSource {
+class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButtonsDataSource, YNContinueWithImageDelegate {
     var imageInteractor : YNTakeImageInteractor
     var selectImageScreenModel : YNPickImageControllerModel
+    var continueDelegate : YNContinueWithImageDelegate?
     
     // MARK: -
     // MARK: Initializer
@@ -241,11 +247,19 @@ class YNPickImagePresenter : YNImageFromGaleryDataSource, YNEnablePickImageButto
     }
     
     // MARK: -
+    // MARK: YNContinueWithImageDelegate
+    
+    func continueWith(imageModel model : YNBigImageModel) {
+        self.continueDelegate?.continueWith(imageModel: model)
+    }
+    
+    // MARK: -
     // MARK: Public functions
     
     func setupSelectNewImageController(_ controller : inout YNSelectImageFromGaleryController) {
         controller.setupDataSource = self
         controller.continueDataSource = self
         controller.delegate = self.imageInteractor
+        controller.successDelegate = self
     }
 }

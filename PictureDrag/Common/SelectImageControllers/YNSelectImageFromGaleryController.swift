@@ -26,6 +26,7 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
     weak var setupDataSource : YNImageFromGaleryDataSource?
     weak var continueDataSource : YNEnablePickImageButtonsDataSource?
     weak var delegate : YNInteractorDelegate?
+    weak var successDelegate : YNContinueWithImageDelegate?
     
     private var dragDirectionVertical = false
     
@@ -217,10 +218,11 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
             return
         }
         
-        let success = delegate.selectedImage(image, imageViewBounds: self.imageView.bounds, selectionFrame: selectionView.frame)
+        let (success, model) = delegate.saveSelectedImage(image, imageViewBounds: self.imageView.bounds, selectionFrame: selectionView.frame)
+        
         if success {
-            // continue game
-        }
+            self.successDelegate?.continueWith(imageModel: model!) // continue game
+        } // show alert that smth went wrong??
     }
     
     // MARK: -

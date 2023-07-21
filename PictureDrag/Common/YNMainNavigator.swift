@@ -7,7 +7,7 @@
 
 import UIKit
 
-class YNMainNavigator : YNMainPresenterDelegate {
+class YNMainNavigator : YNMainPresenterDelegate, YNContinueWithImageDelegate {
     var mainPresenter : YNMainPresenter?
     var mainViewController : YNMainViewController?
     let mainInteractor = YNInteractor()
@@ -50,38 +50,44 @@ class YNMainNavigator : YNMainPresenterDelegate {
     // MARK: Show controllers on button tapps
     
     private func showNewImageController() {
-        let viewController = YNSelectImageFromGaleryController.controller(inStoryboard: mainStoryboard())
-        guard var controller = viewController as? YNSelectImageFromGaleryController else {
+        guard var vc = YNSelectImageFromGaleryController.controller(inStoryboard: mainStoryboard()) as? YNSelectImageFromGaleryController else {
             assertionFailure("\(Self.self): unexpectedly found YNSelectImageFromGaleryController to be nil")
             return
         }
-        self.mainPresenter?.setupSelectNewImageController(&controller)
-        self.navigationController?.show(controller, sender: self)//present(controller, animated: true)
+        self.mainPresenter?.setupSelectNewImageController(&vc, sender: self)
+        self.navigationController?.show(vc, sender: self)//present(controller, animated: true)
     }
     
     private func showAddedImageController() {
-        let viewController = YNExistingImagesController.controller(inStoryboard: mainStoryboard())
-        guard var controller = viewController as? YNExistingImagesController else {
+        guard var vc = YNExistingImagesController.controller(inStoryboard: mainStoryboard()) as? YNExistingImagesController else {
             assertionFailure("\(Self.self): unexpectedly found YNExistingImagesController to be nil")
             return
         }
-        self.mainPresenter?.setupSelectedImagesController(&controller)
-        self.navigationController?.show(controller, sender: self)
+        self.mainPresenter?.setupSelectedImagesController(&vc, sender: self)
+        self.navigationController?.show(vc, sender: self)
     }
     
     private func showBestResultsController() {
-        let viewController = YNShowResultsViewController.controller(inStoryboard: mainStoryboard())
-        guard var controller = viewController as? YNShowResultsViewController else {
+        guard var vc = YNShowResultsViewController.controller(inStoryboard: mainStoryboard()) as? YNShowResultsViewController else {
             assertionFailure("\(Self.self): unexpectedly found YNShowResultsViewController to be nil")
             return
         }
 //        controller.modalPresentationStyle = .pageSheet
 //        controller.modalTransitionStyle = .coverVertical
         
-        self.mainPresenter?.setupShowResultsController(&controller)
-        self.navigationController?.showDetailViewController(controller, sender: self)
+        self.mainPresenter?.setupShowResultsController(&vc)
+        self.navigationController?.showDetailViewController(vc, sender: self)
         
 //        self.present(controller, animated: true)
+    }
+    
+    private func showDragController(withModel model : YNBigImageModel) {
+        guard var vc = YNDragViewController.controller(inStoryboard: mainStoryboard()) as? YNDragViewController else {
+            assertionFailure("\(Self.self): unexpectedly found YNDragViewController to be nil")
+            return
+        }
+        self.mainPresenter?.setupDragController(&vc, withModel: model)
+        self.navigationController?.show(vc, sender: self)
     }
     
     // MARK: -
@@ -90,6 +96,13 @@ class YNMainNavigator : YNMainPresenterDelegate {
     private func mainStoryboard() -> UIStoryboard {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         return storyboard
+    }
+    
+    // MARK: -
+    // MARK: YNContinueWithImageDelegate
+    
+    func continueWith(imageModel model : YNBigImageModel) {
+        self.showDragController(withModel : model)
     }
     
     // MARK: -

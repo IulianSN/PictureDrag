@@ -10,7 +10,7 @@ import UIKit
 protocol YNInteractorDelegate : AnyObject {
     func calculateSelectionFrame(imageViewBounds frame : CGRect, imageSize size : CGSize) -> CGRect
     func calculateNextPositionWihtPoint(_ point : CGPoint, selectionViewFrame selectFrame : CGRect, imageViewBounds mainFrame : CGRect, imageSize size : CGSize) -> CGRect
-    func selectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> Bool
+    func saveSelectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> (Bool, YNBigImageModel?)
     func newImageSelected()
 }
 
@@ -124,8 +124,7 @@ class YNTakeImageInteractor : YNInteractorDelegate, YNCalculateImageParametersDe
         return rect
     }
     
-    func selectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> Bool {
-        var success = false
+    func saveSelectedImage(_ image : UIImage, imageViewBounds mainFrame : CGRect, selectionFrame frame : CGRect) -> (Bool, YNBigImageModel?) {
         let imageModifier = YNImageModifier()
         let imageFrame = self.calculateImageFrame(frame: mainFrame, size: image.size)
         let celectionFrameInImageFrame = CGRect(x: frame.origin.x - imageFrame.origin.x,
@@ -138,11 +137,13 @@ class YNTakeImageInteractor : YNInteractorDelegate, YNCalculateImageParametersDe
         {
             if let identifier = imageModifier.saveImage(croppedImage) {
                 YNCDManager.shared.saveImageModel(withID: identifier)
-                success = true
+                let model = YNBigImageModel(imageIdentifier: identifier)
+                model.bigImage = croppedImage
+                return (true, model)
             }
         }
         
-        return success
+        return (false, nil)
     }
     
     func newImageSelected() {

@@ -20,11 +20,6 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
     @IBOutlet private weak var noImagesLabel: UILabel!
     @IBOutlet weak var cancelButton: UIButton!
     
-//    private var imagesNumber : Int {
-//        get {
-//            self.imagesDataSource?.numberOfImagesToShow ?? 0
-//        }
-//    }
     private var selectedImage : UIImage?
     private var unselectedImage : UIImage?
     private var placeholderImage : UIImage?
@@ -32,6 +27,7 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
     weak var setupDataSource : YNPreselectedImagesControllerDataSource?
     weak var imagesDataSource : YNImagesListDataSource?
     weak var delegate : YNSelectImageDelegate?
+    weak var successDelegate : YNContinueWithImageDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,14 +89,17 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
                                      textColor : source.textColor,
                                      touchColor: source.colorOnTouch,
                                      disabledColor: source.colorDisabled)
-        self.startButton.onTap { _ in
-            self.notifyDelegateStartTapped()
+        self.startButton.onTap {[weak self] _ in
+            self?.notifyDelegateStartTapped()
         }
         self.enableStartButtonIfNeeded()
     }
     
     private func notifyDelegateStartTapped() {
-        self.delegate?.startTapped()
+        if let model = self.imagesDataSource?.imgModelToContinue {
+            self.successDelegate?.continueWith(imageModel: model)
+        }
+        // show error alert ??
     }
     
     private func enableDeleteBlockIfNeeded() {

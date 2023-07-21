@@ -27,6 +27,16 @@ class YNImageModifier {
     }
     
     // MARK: -
+    // MARK: Class functions
+    
+    class func cropImage(_ image : CGImage, inRect rect : CGRect) -> UIImage? {
+        guard let croppedCGImg: CGImage = image.cropping(to: rect) else {
+            return nil
+        }
+        return UIImage(cgImage: croppedCGImg)
+    }
+    
+    // MARK: -
     // MARK: Public functions
     
     func makeSmallImage(_ image : UIImage?) -> UIImage? {
@@ -93,6 +103,12 @@ class YNImageModifier {
         }
         let image = UIImage(contentsOfFile: fileURL.path)
         return image
+    }
+    
+    func removeImages(withIDs array : [String]) {
+        for identifier in array {
+            self.deleteImage(forImageID: identifier)
+        }
     }
     
     func deleteImage(forImageID identifier : String) { // return success ??

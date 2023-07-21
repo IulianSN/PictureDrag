@@ -46,16 +46,35 @@ class YNCDManager {
     func loadImages() -> [String] {
         var imageIDs = [String]()
         
-        let request = YNCDImageModel.fetchRequest()
-        do {
-            let models = try self.persistentContainer.viewContext.fetch(request)
+        if let models = self.fetchImageModels() {
             for model in models {
                 imageIDs.append(model.imageID)
             }
+        }
+        return imageIDs
+    }
+    
+    func removeImageModels(withIDs array : [String]) {
+        if let models = self.fetchImageModels() {
+            for model in models {
+                if array.contains(model.imageID) {
+                    self.persistentContainer.viewContext.delete(model)
+                }
+//                imageIDs.append(model.imageID)
+            }
+            self.saveContext()
+        }
+    }
+    
+    private func fetchImageModels() -> [YNCDImageModel]? {
+        let request = YNCDImageModel.fetchRequest()
+        do {
+            let models = try self.persistentContainer.viewContext.fetch(request)
+            return models
         } catch {
             print("Fetch failed with error: \(error)")
         }
-        return imageIDs
+        return nil
     }
     
     

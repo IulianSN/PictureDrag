@@ -24,9 +24,10 @@ protocol YNPreselectedImagesControllerDataSource : AnyObject { // YNPickImagePre
     var buttonHighlightedColor : UIColor {get}
 }
 
-class YNSelectImagePresenter : YNPreselectedImagesControllerDataSource {
+class YNSelectImagePresenter : YNPreselectedImagesControllerDataSource, YNContinueWithImageDelegate {
     var imageInteractor : YNSelectImageInteractor
     var selectImageScreenModel : YNSelectedImagesControllerModel
+    var continueDelegate : YNContinueWithImageDelegate?
     
     // MARK: -
     // MARK: Initializer
@@ -36,10 +37,18 @@ class YNSelectImagePresenter : YNPreselectedImagesControllerDataSource {
         self.selectImageScreenModel = self.imageInteractor.imageScreenModel()
     }
     
-    func setupSelectNewImageController(_ controller : inout YNExistingImagesController) {
+    func setupSelectExistingImageController(_ controller : inout YNExistingImagesController) {
         controller.setupDataSource = self
         controller.imagesDataSource = self.imageInteractor
         controller.delegate = self.imageInteractor
+        controller.successDelegate = self
+    }
+    
+    // MARK: -
+    // MARK: YNContinueWithImageDelegate
+    
+    func continueWith(imageModel model : YNBigImageModel) {
+        self.continueDelegate?.continueWith(imageModel: model)
     }
     
     // MARK: -

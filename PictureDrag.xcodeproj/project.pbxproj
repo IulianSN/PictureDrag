@@ -35,6 +35,10 @@
 		85DA25222A5C96E1000D7F6B /* YNCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25202A5C96E1000D7F6B /* YNCoreData.xcdatamodeld */; };
 		85DA25282A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25242A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift */; };
 		85DA252A2A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25262A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift */; };
+		85DA252D2A65695E000D7F6B /* YNDragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA252C2A65695E000D7F6B /* YNDragViewController.swift */; };
+		85DA252F2A65A3DB000D7F6B /* YNDragPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA252E2A65A3DB000D7F6B /* YNDragPresenter.swift */; };
+		85DA25312A6725EE000D7F6B /* YNDragInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25302A6725ED000D7F6B /* YNDragInteractor.swift */; };
+		85DA25332A682DFE000D7F6B /* YNDragViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DA25322A682DFE000D7F6B /* YNDragViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +72,10 @@
 		85DA25212A5C96E1000D7F6B /* YNCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YNCoreData.xcdatamodel; sourceTree = "<group>"; };
 		85DA25242A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YNCDImageModel+CDClass+CDProps.swift"; sourceTree = "<group>"; };
 		85DA25262A5C97AD000D7F6B /* YNCDResultsModel+CDClass+CDProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YNCDResultsModel+CDClass+CDProps.swift"; sourceTree = "<group>"; };
+		85DA252C2A65695E000D7F6B /* YNDragViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragViewController.swift; sourceTree = "<group>"; };
+		85DA252E2A65A3DB000D7F6B /* YNDragPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragPresenter.swift; sourceTree = "<group>"; };
+		85DA25302A6725ED000D7F6B /* YNDragInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragInteractor.swift; sourceTree = "<group>"; };
+		85DA25322A682DFE000D7F6B /* YNDragViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +121,7 @@
 				8529C01A2A23CAAB0030D102 /* YNInteractor.swift */,
 				856CF02F2A47270000C24C1B /* YNSelectImageInteractor.swift */,
 				856CF0312A47277D00C24C1B /* YNTakeImageInteractor.swift */,
+				85DA25302A6725ED000D7F6B /* YNDragInteractor.swift */,
 			);
 			path = AppLogic;
 			sourceTree = "<group>";
@@ -175,6 +184,7 @@
 		859B28522A1B5EBE0072318B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				85DA252B2A65688B000D7F6B /* DragController */,
 				859F4CFC2A2B4D7E001CBAB5 /* SelectImageControllers */,
 				856BC4CE2A2378E300259E9E /* ShowGameResults */,
 				856BC4C92A23375300259E9E /* AppLogic */,
@@ -186,6 +196,7 @@
 				859B28562A1B64DF0072318B /* YNMainNavigator.swift */,
 				859B285A2A1BC5250072318B /* YNMainPresenter.swift */,
 				856CF0332A49BEB500C24C1B /* YNSelectImagePresenter.swift */,
+				85DA252E2A65A3DB000D7F6B /* YNDragPresenter.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -227,6 +238,15 @@
 				85DA25202A5C96E1000D7F6B /* YNCoreData.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		85DA252B2A65688B000D7F6B /* DragController */ = {
+			isa = PBXGroup;
+			children = (
+				85DA252C2A65695E000D7F6B /* YNDragViewController.swift */,
+				85DA25322A682DFE000D7F6B /* YNDragViewCell.swift */,
+			);
+			path = DragController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,16 +321,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				856CF0302A47270000C24C1B /* YNSelectImageInteractor.swift in Sources */,
+				85DA25312A6725EE000D7F6B /* YNDragInteractor.swift in Sources */,
 				859B28592A1B6E190072318B /* YNExtensions.swift in Sources */,
 				856BC4C12A2114BD00259E9E /* YNTouchView.swift in Sources */,
 				859F4CFE2A2B4E0B001CBAB5 /* YNSelectImageFromGaleryController.swift in Sources */,
+				85DA25332A682DFE000D7F6B /* YNDragViewCell.swift in Sources */,
 				859F4D002A35F09C001CBAB5 /* YNDragableView.swift in Sources */,
 				856BC4D22A237B4500259E9E /* YNShowResultsTableViewCell.swift in Sources */,
 				856CF0342A49BEB500C24C1B /* YNSelectImagePresenter.swift in Sources */,
 				859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */,
 				856BC4D02A2379B400259E9E /* YNShowResultsViewController.swift in Sources */,
 				8529C01B2A23CAAB0030D102 /* YNInteractor.swift in Sources */,
+				85DA252F2A65A3DB000D7F6B /* YNDragPresenter.swift in Sources */,
 				859B28542A1B5F3B0072318B /* YNAppDependencies.swift in Sources */,
+				85DA252D2A65695E000D7F6B /* YNDragViewController.swift in Sources */,
 				856BC4C82A2334C800259E9E /* YNModels.swift in Sources */,
 				856CF0322A47277D00C24C1B /* YNTakeImageInteractor.swift in Sources */,
 				859B28572A1B64DF0072318B /* YNMainNavigator.swift in Sources */,

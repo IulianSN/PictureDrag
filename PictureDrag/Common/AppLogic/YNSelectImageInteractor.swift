@@ -11,7 +11,6 @@ protocol YNSelectImageDelegate : AnyObject {
     func updateData()
     func cleanData()
     func deleteTapped()
-    func startTapped()
     func cellPressed()
     func endDeletionMode()
     func selectedImageIndex(_ index : Int)
@@ -19,6 +18,7 @@ protocol YNSelectImageDelegate : AnyObject {
 
 protocol YNImagesListDataSource : AnyObject {
     var numberOfImagesToShow : Int {get}
+    var imgModelToContinue : YNBigImageModel? {get}
     
     func imageForID(_ id : Int) -> UIImage?
     func deleteStateForID(_ id : Int) -> YNCelectForDeleteEnum
@@ -113,19 +113,18 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
             return
         }
         var newArray = [YNBigImageModel]()
+        var deleteArray = [String]()
         for (index, element) in self.images.enumerated() {
             if !self.idsToDelete.contains(index) {
                 newArray.append(element)
+            } else {
+                deleteArray.append(element.imageIdentifier)
             }
         }
         self.images = newArray
-        // remove images from local storage && imageModels form CD
+        YNImageModifier().removeImages(withIDs: deleteArray)
+        YNCDManager.shared.removeImageModels(withIDs: deleteArray)
         self.idsToDelete = [Int]()
-        #warning("Notify core data manager to delete unneeded models")
-    }
-    
-    func startTapped() {
-        
     }
     
     func cellPressed() {
@@ -154,6 +153,13 @@ class YNSelectImageInteractor : YNSelectImageDelegate, YNImagesListDataSource {
     
     var numberOfImagesToShow : Int {
         return self.images.count
+    }
+    
+    var imgModelToContinue : YNBigImageModel? {
+        if self.currentSelectedIndex >= 0 {
+            return self.images[self.currentSelectedIndex]
+        }
+        return nil
     }
     
     func imageForID(_ id : Int) -> UIImage? {

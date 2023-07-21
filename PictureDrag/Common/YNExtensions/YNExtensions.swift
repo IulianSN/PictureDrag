@@ -89,6 +89,21 @@ extension UIView {
         view.addConstraint(bottomConstraint)
     }
     
+    func addHorizontalConstraint(constant : CGFloat,
+                                 relation : NSLayoutConstraint.Relation,
+                              toView view : UIView) -> NSLayoutConstraint
+    {
+        let horizontalConstraint = NSLayoutConstraint(item: self,
+                                                 attribute: .trailingMargin,
+                                                 relatedBy: relation,
+                                                    toItem: view,
+                                                 attribute: .leadingMargin,
+                                                multiplier: 1,
+                                                  constant: constant)
+        view.addConstraint(horizontalConstraint)
+        return horizontalConstraint
+    }
+    
     #warning("check if it works !!!")
     func inactivateLayoutMarginConstraints() {
         if let superview = self.superview {
