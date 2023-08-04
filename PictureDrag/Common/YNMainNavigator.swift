@@ -11,7 +11,7 @@ class YNMainNavigator : YNMainPresenterDelegate, YNContinueWithImageDelegate {
     var mainPresenter : YNMainPresenter?
     var mainViewController : YNMainViewController?
     let mainInteractor = YNInteractor()
-    var navigationController : UINavigationController?
+    var navigationController : YNNavigation?
     
     // MARK: -
     // MARK: Public functions
@@ -30,15 +30,10 @@ class YNMainNavigator : YNMainPresenterDelegate, YNContinueWithImageDelegate {
         self.mainPresenter = YNMainPresenter(navDelegate: self, interactor: self.mainInteractor)
         self.mainPresenter?.setupMainController(&controller)
         self.mainViewController = controller
-        guard let navController = windowUnwrapped.rootViewController as? UINavigationController else {
-            assertionFailure("\(Self.self): unexpectedly found UINavigationController to be nil")
-            return
-        }
-        #warning("set up navigationController (nav bar style, buttons color and so on) in presenter!")
-//        self.navigationController?.navigationBar.barStyle = .black // setup style / 
-        self.navigationController = navController
-        navController.modalPresentationCapturesStatusBarAppearance = true
-        navController.show(controller, sender: self)
+
+        self.navigationController = YNNavigation()
+        windowUnwrapped.rootViewController = self.navigationController
+        self.navigationController?.show(controller, sender: self)
     }
     
     // MARK: -
@@ -114,5 +109,12 @@ class YNMainNavigator : YNMainPresenterDelegate, YNContinueWithImageDelegate {
             case .addedImageButton : showAddedImageController()
             case .bestResultsButton : showBestResultsController()
         }
+    }
+}
+
+class YNNavigation: UINavigationController {
+#warning("set up navigationController (nav bar style, buttons color and so on) here or on presenter?")
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
     }
 }

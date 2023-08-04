@@ -9,24 +9,25 @@ import UIKit
 
 protocol YNDradDataSource : AnyObject {
     var itemsNo : Int {get}
-    subscript(ix : Int) -> YNImageToDragModel {get}
+    subscript(ix : Int) -> YNDragableModel {get}
     
+    func isSuccessfullyFinished() -> Bool
 }
 
 protocol YNDradDelegate : AnyObject {
-    
+    func insertItem(withIndex index1 : Int, toIndex index2 : Int)
 }
 
 class YNDragInteractor : YNDradDelegate, YNDradDataSource {
     let imageModel : YNBigImageModel
-    var imagesToDrag = [YNImageToDragModel]()
+    var imagesToDrag = [YNDragableModel]()
     
-    init(imageModel : YNBigImageModel, images : [YNImageToDragModel]) {
+    init(imageModel : YNBigImageModel, images : [YNDragableModel]) {
         self.imageModel = imageModel
     }
     
     convenience init(imageModel : YNBigImageModel) {
-        self.init(imageModel: imageModel, images: [YNImageToDragModel]())
+        self.init(imageModel: imageModel, images: [YNDragableModel]())
         self.createImages()
     }
     
@@ -39,11 +40,11 @@ class YNDragInteractor : YNDradDelegate, YNDradDataSource {
         for i in 0..<16 { // 4x4 // later MB make variable, like 4x4, 5x5 ...
             let shuffleIndex = self.randomNewInt(indexes)
             indexes.append(shuffleIndex)
-            let imgModel = YNImageToDragModel(initialIndex: shuffleIndex, expectedIndex: i, image: cutImages[i])
+            let imgModel = YNDragableModel(initialIndex: shuffleIndex, expectedIndex: i, image: cutImages[i])
             self.imagesToDrag.append(imgModel)
         }
         self.imagesToDrag.sort { m1, m2 in
-            m1.initialIndex < m2.initialIndex
+            m1.currentIndex < m2.currentIndex
         }
     }
     
@@ -91,10 +92,38 @@ class YNDragInteractor : YNDradDelegate, YNDradDataSource {
         imagesToDrag.count
     }
     
-    subscript(ix : Int) -> YNImageToDragModel {
+    subscript(ix : Int) -> YNDragableModel {
         self.imagesToDrag[ix]
+    }
+    
+    func isSuccessfullyFinished() -> Bool {
+        for t in self.imagesToDrag.enumerated() {
+            if t.offset != t.element.currentIndex {
+                return false
+            }
+        }
+        return true // all elements are in right order
     }
     
     //MARK: -
     //MARK: YNDradDelegate
+    
+    func insertItem(withIndex index1 : Int, toIndex index2 : Int) {
+        if index1 == index2 {
+            return
+        }
+        
+        var item = self.imagesToDrag[index1]
+        self.imagesToDrag.remove(at: index1)
+        self.imagesToDrag.insert(item, at: index2)
+        
+        for t in self.imagesToDrag.enumerated() {
+            t.element.previousIndex = t.element.currentIndex
+            t.element.currentIndex = t.offset
+        }
+
+        self.imagesToDrag.sort { m1, m2 in
+            m1.currentIndex < m2.currentIndex
+        }
+    }
 }

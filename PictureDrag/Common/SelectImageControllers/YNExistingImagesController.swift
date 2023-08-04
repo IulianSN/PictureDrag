@@ -41,10 +41,15 @@ class YNExistingImagesController : UIViewController, UICollectionViewDelegateFlo
         super.viewDidDisappear(animated)
         
         self.delegate?.cleanData()
+        #warning("Notify delegate (if continued with selected image) to remove controller from navController.viewControllers. && MB use navController delegate methods.")
     }
     
     deinit {
        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
     }
     
     // MARK: -

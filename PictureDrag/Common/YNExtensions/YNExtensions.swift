@@ -13,6 +13,12 @@ extension UIViewController {
     }
 }
 
+extension UINavigationController {
+    open override var childForStatusBarStyle: UIViewController? {
+        return visibleViewController
+    }
+}
+
 extension UIView {
     // MARK: -
     // MARK: Add/Inactivate constraints

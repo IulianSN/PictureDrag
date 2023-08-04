@@ -38,12 +38,6 @@ class YNBigImageModel {
     }
 }
 
-struct YNImageToDragModel {
-    var initialIndex : Int
-    let expectedIndex : Int
-    let image : UIImage
-}
-
 // MARK: -
 // MARK: Controllers content models
 

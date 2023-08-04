@@ -551,10 +551,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sp8-7X-BeN">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sp8-7X-BeN">
                                 <rect key="frame" x="24" y="204" width="352" height="352"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" priority="999" constant="352" id="CRa-VR-Vy6"/>
                                     <constraint firstAttribute="width" secondItem="Sp8-7X-BeN" secondAttribute="height" multiplier="1:1" id="h8A-l0-2kG"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eGK-V7-Wte">
@@ -590,8 +591,14 @@
                                 <connections>
                                     <outlet property="dataSource" destination="Xdj-Tq-YbG" id="ZZX-bK-Onh"/>
                                     <outlet property="delegate" destination="Xdj-Tq-YbG" id="Qyb-pa-cyy"/>
+                                    <outlet property="dragDelegate" destination="Xdj-Tq-YbG" id="fUp-HC-Myt"/>
+                                    <outlet property="dropDelegate" destination="Xdj-Tq-YbG" id="BN6-SX-Vlg"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e4Z-vQ-g50" userLabel="LeftContainerView">
+                                <rect key="frame" x="24" y="24" width="0.0" height="556"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncf-Ts-YJX">
                                 <rect key="frame" x="0.0" y="24" width="400" height="180"/>
                                 <subviews>
@@ -604,7 +611,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="30M-BL-Qc9"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="30M-BL-Qc9"/>
                                     <constraint firstItem="MsI-cx-wME" firstAttribute="centerX" secondItem="ncf-Ts-YJX" secondAttribute="centerX" id="LHM-FT-sLU"/>
                                     <constraint firstItem="MsI-cx-wME" firstAttribute="centerY" secondItem="ncf-Ts-YJX" secondAttribute="centerY" id="kVC-fh-vBz"/>
                                 </constraints>
@@ -613,23 +620,28 @@
                         <viewLayoutGuide key="safeArea" id="dXv-Vc-Jpy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="dXv-Vc-Jpy" firstAttribute="bottom" secondItem="e4Z-vQ-g50" secondAttribute="bottom" id="0Ry-9S-V0t"/>
+                            <constraint firstItem="e4Z-vQ-g50" firstAttribute="leading" secondItem="dXv-Vc-Jpy" secondAttribute="leading" constant="24" id="Di0-fQ-4Tc"/>
                             <constraint firstItem="dXv-Vc-Jpy" firstAttribute="bottom" secondItem="Sp8-7X-BeN" secondAttribute="bottom" constant="24" id="QMh-wH-Hwa"/>
                             <constraint firstItem="dXv-Vc-Jpy" firstAttribute="trailing" secondItem="ncf-Ts-YJX" secondAttribute="trailing" id="Rc6-vo-wYx"/>
                             <constraint firstItem="Sp8-7X-BeN" firstAttribute="top" secondItem="dXv-Vc-Jpy" secondAttribute="top" priority="600" constant="24" id="Wvw-n6-Ayn"/>
-                            <constraint firstItem="Sp8-7X-BeN" firstAttribute="leading" secondItem="dXv-Vc-Jpy" secondAttribute="leading" constant="24" id="XHM-wm-xtV"/>
+                            <constraint firstItem="Sp8-7X-BeN" firstAttribute="leading" secondItem="dXv-Vc-Jpy" secondAttribute="leading" priority="900" constant="24" id="XHM-wm-xtV"/>
                             <constraint firstItem="dXv-Vc-Jpy" firstAttribute="trailing" secondItem="Sp8-7X-BeN" secondAttribute="trailing" constant="24" id="ZFB-bu-sdC"/>
                             <constraint firstItem="ncf-Ts-YJX" firstAttribute="leading" secondItem="dXv-Vc-Jpy" secondAttribute="leading" id="aLa-Tc-KPh"/>
                             <constraint firstItem="Sp8-7X-BeN" firstAttribute="top" secondItem="ncf-Ts-YJX" secondAttribute="bottom" id="ajY-IO-HJt"/>
+                            <constraint firstItem="e4Z-vQ-g50" firstAttribute="top" secondItem="dXv-Vc-Jpy" secondAttribute="top" id="c3i-A9-diI"/>
+                            <constraint firstItem="Sp8-7X-BeN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dXv-Vc-Jpy" secondAttribute="leading" constant="24" id="gUu-9f-uMm"/>
                             <constraint firstItem="ncf-Ts-YJX" firstAttribute="top" secondItem="dXv-Vc-Jpy" secondAttribute="top" id="ncM-eO-mPD"/>
+                            <constraint firstItem="Sp8-7X-BeN" firstAttribute="leading" secondItem="e4Z-vQ-g50" secondAttribute="trailing" id="yNS-3g-kBd"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="400" height="600"/>
                     <connections>
-                        <outlet property="colViewLeadConstraint" destination="XHM-wm-xtV" id="mK6-kq-KZX"/>
+                        <outlet property="collectionViewWidthConst" destination="CRa-VR-Vy6" id="nxg-kR-gz3"/>
                         <outlet property="containerView" destination="ncf-Ts-YJX" id="dHE-IZ-AWa"/>
                         <outlet property="imagesCollectionView" destination="Sp8-7X-BeN" id="tkJ-5e-kUR"/>
-                        <outlet property="labelToColVertConstraint" destination="ajY-IO-HJt" id="wqU-T4-f0m"/>
-                        <outlet property="labelViewTrailConstraint" destination="Rc6-vo-wYx" id="tYO-DO-guA"/>
+                        <outlet property="leftContainerView" destination="e4Z-vQ-g50" id="1Qr-Gz-OHV"/>
+                        <outlet property="timerLabel" destination="MsI-cx-wME" id="Hkt-LQ-bJ9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hu0-1s-97E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

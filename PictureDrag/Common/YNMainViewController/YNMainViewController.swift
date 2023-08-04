@@ -59,7 +59,7 @@ class YNMainViewController: UIViewController { // make presenter controller's da
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
+        return .darkContent
     }
 }
 

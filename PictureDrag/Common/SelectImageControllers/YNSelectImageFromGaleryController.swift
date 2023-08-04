@@ -38,6 +38,12 @@ class YNSelectImageFromGaleryController : UIViewController, PHPickerViewControll
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+         super.viewDidDisappear(animated)
+        
+#warning("Notify delegate (if continued with selected image) to remove controller from navController.viewControllers. && MB use navController delegate methods.")
+    }
+    
     deinit {
        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }

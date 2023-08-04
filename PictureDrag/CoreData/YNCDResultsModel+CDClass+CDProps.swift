@@ -24,7 +24,7 @@ extension YNCDResultsModel {
     @NSManaged public var name: String
     @NSManaged public var date: Date
     @NSManaged public var resultTime: String
-
+    // add complexity parameter as Int (1, 2, 4) // and create enum : Int
 }
 
 extension YNCDResultsModel : Identifiable {

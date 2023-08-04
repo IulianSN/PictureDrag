@@ -20,6 +20,7 @@
 		856CF0302A47270000C24C1B /* YNSelectImageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF02F2A47270000C24C1B /* YNSelectImageInteractor.swift */; };
 		856CF0322A47277D00C24C1B /* YNTakeImageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF0312A47277D00C24C1B /* YNTakeImageInteractor.swift */; };
 		856CF0342A49BEB500C24C1B /* YNSelectImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CF0332A49BEB500C24C1B /* YNSelectImagePresenter.swift */; };
+		8598CC892A6D3380004F196E /* YNDragableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8598CC882A6D3380004F196E /* YNDragableModel.swift */; };
 		859B283D2A18C5C90072318B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B283C2A18C5C90072318B /* AppDelegate.swift */; };
 		859B28412A18C5C90072318B /* YNMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B28402A18C5C90072318B /* YNMainViewController.swift */; };
 		859B28442A18C5C90072318B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859B28422A18C5C90072318B /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		856CF02F2A47270000C24C1B /* YNSelectImageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNSelectImageInteractor.swift; sourceTree = "<group>"; };
 		856CF0312A47277D00C24C1B /* YNTakeImageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNTakeImageInteractor.swift; sourceTree = "<group>"; };
 		856CF0332A49BEB500C24C1B /* YNSelectImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNSelectImagePresenter.swift; sourceTree = "<group>"; };
+		8598CC882A6D3380004F196E /* YNDragableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNDragableModel.swift; sourceTree = "<group>"; };
 		859B28392A18C5C90072318B /* PictureDrag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDrag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859B283C2A18C5C90072318B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859B28402A18C5C90072318B /* YNMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YNMainViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			children = (
 				85DA252C2A65695E000D7F6B /* YNDragViewController.swift */,
 				85DA25322A682DFE000D7F6B /* YNDragViewCell.swift */,
+				8598CC882A6D3380004F196E /* YNDragableModel.swift */,
 			);
 			path = DragController;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				85DA25282A5C97AD000D7F6B /* YNCDImageModel+CDClass+CDProps.swift in Sources */,
 				856BC4CB2A2337E500259E9E /* YNImageModifier.swift in Sources */,
 				85DA25222A5C96E1000D7F6B /* YNCoreData.xcdatamodeld in Sources */,
+				8598CC892A6D3380004F196E /* YNDragableModel.swift in Sources */,
 				856CF02C2A40E7E900C24C1B /* YNExistingImagesController.swift in Sources */,
 				856BC4C42A2140F200259E9E /* YNDesign.swift in Sources */,
 				859B283D2A18C5C90072318B /* AppDelegate.swift in Sources */,
